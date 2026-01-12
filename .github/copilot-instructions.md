@@ -314,13 +314,17 @@ aiready/
 
 Current priority order:
 
-1. ✅ **@aiready/core** - Basic utilities (DONE)
-2. ✅ **@aiready/pattern-detect** - Semantic duplicates (DONE)
-3. **@aiready/context-analyzer** - Token cost + fragmentation
+1. ✅ **@aiready/core** - Basic utilities (DONE) - [Retrospective](.github/plans/pattern-detect-retrospective.md)
+2. ✅ **@aiready/pattern-detect** - Semantic duplicates (DONE) - [Retrospective](.github/plans/pattern-detect-retrospective.md)
+3. **@aiready/context-analyzer** - Token cost + fragmentation - [Implementation Plan](.github/plans/context-analyzer-plan.md)
 4. **@aiready/doc-drift** - Documentation staleness
 5. **@aiready/consistency** - Naming patterns
 6. **@aiready/cli** - Unified interface
 7. **@aiready/deps** - Wrapper for madge/depcheck
+
+### Tool Implementation Plans
+- [Context Analyzer Plan](.github/plans/context-analyzer-plan.md) - Next tool to implement
+- [Pattern Detect Retrospective](.github/plans/pattern-detect-retrospective.md) - Lessons learned from first spoke
 
 ## Questions for Agent
 
