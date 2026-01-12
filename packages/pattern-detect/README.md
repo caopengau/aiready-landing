@@ -290,6 +290,31 @@ aiready-patterns ./src --no-approx --stream-results --max-blocks 100
 aiready-patterns ./src --max-blocks 200 --min-shared-tokens 12
 ```
 
+## 🎛️ Tuning Playbook
+
+Use these presets to quickly balance precision, recall, and runtime:
+
+- Speed-first (large repos):
+  - `aiready-patterns ./src --min-shared-tokens 12 --max-candidates 60 --max-blocks 300`
+  - Cuts weak candidates early; best for fast, iterative scans.
+
+- Coverage-first (more findings):
+  - `aiready-patterns ./src --min-shared-tokens 6 --max-candidates 150`
+  - Expands candidate pool; expect more results and longer runtime.
+
+- Short-block focus (helpers/utilities):
+  - `aiready-patterns ./src --min-lines 5 --min-shared-tokens 6 --max-candidates 120`
+  - Better recall for small functions; consider `--exclude "**/test/**"` to reduce noise.
+
+### Minimum Lines vs Min Shared Tokens
+
+- `minLines` filters which blocks are extracted; lower values include smaller functions that have fewer tokens overall.
+- Smaller blocks naturally share fewer tokens; to avoid missing true matches when `minLines` is low (≤5–6), consider lowering `minSharedTokens` by 1–2.
+- Recommended pairs:
+  - `minLines 5–6` → `minSharedTokens 6–8` (recall-friendly; watch noise)
+  - `minLines 8–10` → `minSharedTokens 8–10` (precision-first)
+- Default balance: `minLines=5`, `minSharedTokens=8` works well for most repos. Reduce `minSharedTokens` only when you specifically want to catch more short helpers.
+
 **CLI Options:**
 - `--stream-results` - Output duplicates as found (useful for long analysis)
 - `--no-approx` - Disable candidate filtering (enables progress % and ETA)
