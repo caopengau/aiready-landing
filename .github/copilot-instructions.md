@@ -48,23 +48,29 @@ We follow a **hub-and-spoke** architecture to keep the codebase organized and ma
 
 ## Development Workflow
 
+**⚠️ IMPORTANT: Always use Makefile commands for DevOps operations**
+
+We use a **Makefile-based workflow** for all development, building, testing, and publishing. This ensures consistency and proper monorepo management.
+
 ### 1. Installing Dependencies
 
 ```bash
-pnpm install
+make install
+# or: pnpm install
 ```
 
 ### 2. Building All Packages
 
 ```bash
-pnpm build
+make build
+# or: pnpm build
 ```
 
 ### 3. Development Mode (with watch)
 
 ```bash
-# Build everything in watch mode
-pnpm dev
+make dev
+# or: pnpm dev
 
 # Or build specific package
 pnpm --filter @aiready/pattern-detect dev
@@ -73,8 +79,56 @@ pnpm --filter @aiready/pattern-detect dev
 ### 4. Testing
 
 ```bash
-pnpm test
+make test
+# or: pnpm test
 ```
+
+### 5. Daily Workflow (RECOMMENDED)
+
+```bash
+# After making changes
+git add .
+git commit -m "feat: your changes"
+make push  # ← Syncs monorepo + ALL spoke repos automatically
+```
+
+### 6. Publishing & Release
+
+```bash
+# Check what needs publishing
+make release-status
+
+# Release a spoke (one command does everything)
+make release-one SPOKE=context-analyzer TYPE=patch
+
+# Publish to npm only (advanced)
+make npm-publish SPOKE=context-analyzer
+
+# Sync GitHub only (advanced)
+make publish SPOKE=context-analyzer
+```
+
+### Available Make Commands
+
+```bash
+make help           # Show all available commands
+make release-help   # Show release options
+make install        # Install dependencies
+make build          # Build all packages
+make test           # Run tests
+make lint           # Check code quality
+make fix            # Auto-fix linting issues
+make clean          # Clean build artifacts
+make push           # Push + sync all spoke repos (RECOMMENDED)
+make release-status # Check versions (local vs npm)
+```
+
+### Documentation
+
+- **[WORKFLOW_GUIDE.md](./.github/WORKFLOW_GUIDE.md)** - Daily development workflows
+- **[PUBLISHING.md](../PUBLISHING.md)** - Complete publishing guide
+- **[DEVOPS_WORKFLOW.md](./.github/DEVOPS_WORKFLOW.md)** - Visual workflow diagrams
+- **[RELEASE_CHECKLIST.md](./.github/RELEASE_CHECKLIST.md)** - Quick release reference
 
 ## Adding a New Tool (Spoke)
 
@@ -136,8 +190,23 @@ export async function analyzeYourTool(
   const results: AnalysisResult[] = [];
 
   // Your analysis logic here
+make build
+# or: pnpm --filter @aiready/your-tool dev
+```
 
-  return results;
+### Step 8: Publish (After Implementation)
+
+```bash
+# Commit everything
+git add .
+git commit -m "feat: add @aiready/your-tool"
+make push  # Syncs all repositories
+
+# Create GitHub repo
+gh repo create caopengau/aiready-your-tool --public
+
+# Release first version
+make release-one SPOKE=your-tool TYPE=minor
 }
 ```
 
@@ -228,7 +297,31 @@ const score = similarityScore(code1, code2); // Returns 0-1
 
 ## Publishing Strategy
 
-### Free Tier (npm packages)
+###
+
+### Publishing Workflow
+
+**Use Makefile commands (never direct npm/pnpm publish):**
+
+```bash
+# Check status
+make release-status
+
+# Release a spoke (recommended - does everything)
+make release-one SPOKE=your-tool TYPE=patch
+
+# Or manual steps:
+make version-patch SPOKE=your-tool
+make build
+make npm-publish SPOKE=your-tool
+make publish SPOKE=your-tool
+```
+
+**Important:** 
+- Always use `make push` after commits to sync spoke repos
+- Always use `make npm-publish` (handles workspace:* protocol)
+- Never use `npm publish` directly (will fail with workspace:* protocol)
+- Release order: `core` first, then dependent spokes Free Tier (npm packages)
 - All spoke packages are free and open source
 - Publish to npm with `@aiready/` scope
 - Basic analysis with limited output
@@ -276,27 +369,65 @@ aiready/
 │   │
 │   ├── pattern-detect/    # Spoke - duplicate patterns
 │   │   ├── src/
-│   │   │   ├── index.ts           # Main API
-│   │   │   ├── detector.ts        # Core logic
-│   │   │   └── cli.ts             # CLI interface
-│   │   ├── package.json
-│   │   └── README.md
-│   │
-│   └── [other-tools]/     # More spokes...
-│
-├── package.json           # Root workspace config
-├── pnpm-workspace.yaml    # pnpm workspaces
+2. ✅ **@aiready/pattern-detect** - Semantic duplicates (DONE, v0.5.1 on npm)
+3. ✅ **@aiready/context-analyzer** - Context window cost analysis (DONE, v0.1.0 on npm)
+4. **@aiready/doc-drift** - Documentation staleness
+5. **@aiready/consistency** - Naming patterns
+6. **@aiready/cli** - Unified interface
+7. **@aiready/deps** - Wrapper for madge/depcheck
+
+### Tool Implementation Plans
+- [Context Analyzer Plan](.github/plans/context-analyzer-plan.md) - Completed implementation
+- [Pattern Detect Retrospective](.github/plans/pattern-detect-plan.md) - Lessons learned from first spoke
+
+### DevOps Documentation
+- [WORKFLOW_GUIDE.md](.github/WORKFLOW_GUIDE.md) - Daily development workflows ⭐
+- [PUBLISHING.md](../PUBLISHING.md) - Complete publishing guide
+- [DEVOPS_WORKFLOW.md](.github/DEVOPS_WORKFLOW.md) - Visual workflow diagrams
+- [RELEASE_CHECKLIST.md](.github/RELEASE_CHECKLIST.md) - Quick release referenc
 ├── turbo.json            # Turborepo config
 └── README.md             # Project overview
 ```
 
-## Key Conventions
+- **Should I use make or pnpm?** (Use `make` for DevOps, `pnpm --filter` for dev)
+- **Did I run `make push` after committing?** (Keeps spoke repos in sync)
 
-### Naming
-- Package names: `@aiready/tool-name` (kebab-case)
-- CLI commands: `aiready-toolname`
-- Functions: `camelCase`
-- Types/Interfaces: `PascalCase`
+## DevOps Best Practices
+
+### ✅ DO
+
+1. **Use Makefile commands** - `make build`, `make test`, `make push`
+2. **Run `make push` after every commit** - Keeps all spoke repos synchronized
+3. **Use `make release-one`** - One command handles complete release workflow
+4. **Check `make release-status`** - Know what needs publishing before releasing
+5. **Release core first** - If core changes, publish before dependent spokes
+6. **Test before pushing** - `make test` catches issues early
+
+### ❌ DON'T
+
+1. **Don't use `npm publish` directly** - Use `make npm-publish` (handles workspace:*)
+2. **Don't skip `make push`** - Spoke repos will drift out of sync
+3. **Don't `git push` without `make push`** - Won't sync spoke repositories
+4. **Don't release spokes before core** - Core changes need to publish first
+5. **Don't forget to sync** - External contributors need current code
+
+### Command Priority
+
+When performing DevOps tasks, prefer this order:
+
+1. **Make commands** (highest priority) - `make build`, `make push`, `make release-one`
+2. **Turbo commands** (monorepo builds) - Used internally by Make
+3. **pnpm commands** (package-specific dev) - `pnpm --filter @aiready/core build`
+4. **Direct commands** (avoid) - `npm publish`, `git push` alone
+
+## Getting Help
+
+- Check existing spoke implementations for patterns
+- Review `@aiready/core` types for available utilities
+- Look at `@aiready/pattern-detect` as reference implementation
+- Keep spokes focused - one tool, one job
+- **Read [WORKFLOW_GUIDE.md](.github/WORKFLOW_GUIDE.md) for daily workflows**
+- **Read [PUBLISHING.md](../PUBLISHING.md) for release processes**
 
 ### Issue Severity Levels
 - `critical` - Breaks AI understanding or causes bugs
