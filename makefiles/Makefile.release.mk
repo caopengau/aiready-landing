@@ -123,13 +123,13 @@ release-status: ## Show local and npm registry versions for all spokes
 	echo ""; \
 	$(call log_success,Status collected)
 
-help: ## Show release help
+release-help: ## Show release help
 	@echo "Available targets:"; \
 	echo "  release-one      - Release one spoke (TYPE, SPOKE, [OTP], [FORCE])"; \
 	echo "  release-all      - Release all spokes (TYPE, [OTP], [FORCE])"; \
 	echo "  release-status   - Show local vs npm versions"; \
 	echo ""; \
 	echo "Examples:"; \
-	echo "  make -f makefiles/Makefile.release.mk release-one SPOKE=pattern-detect TYPE=minor"; \
-	echo "  make -f makefiles/Makefile.release.mk release-all TYPE=minor"; \
-	echo "  make -f makefiles/Makefile.release.mk release-status";
+	echo "  make release-one SPOKE=pattern-detect TYPE=minor"; \
+	echo "  make release-all TYPE=minor"; \
+	echo "  make release-status";
