@@ -93,9 +93,279 @@ export interface ModuleCluster {
 
 ### Key Algorithms
 
-#### 1. Dependency Graph Builder
+#### 1. Dependency Graph Construction (DFS-based)
+
+**Algorithm:** Recursive depth-first traversal with cycle detection
+
 ```typescript
 // Build transitive dependency tree
+function buildDependencyGraph(files: FileContent[]): DependencyGraph {
+  const nodes = new Map<string, DependencyNode>();
+  const edges = new Map<string, Set<string>>();
+  
+  // First pass: create nodes
+  for (const { file, content } of files) {
+    const imports = extractImportsFromContent(content);
+    const exports = extractExports(content);
+    nodes.set(file, {
+      file,
+      imports,
+      exports,
+      tokenCost: estimateTokens(content),
+      linesOfCode: content.split('\n').length
+    });
+    edges.set(file, new Set(imports));
+  }
+  
+  return { nodes, edges };
+}
+```
+
+**Complexity:** O(n) where n = number of files
+
+#### 2. Import Depth Analysis (Recursive DFS)
+
+**Algorithm:** Calculate maximum depth of import tree
+
+```typescript
+function calculateImportDepth(
+  file: string,
+  graph: DependencyGraph,
+  visited = new Set<string>(),
+  depth = 0
+): number {
+  if (visited.has(file)) return depth; // Cycle detection
+  
+  const dependencies = graph.edges.get(file);
+  if (!dependencies || dependencies.size === 0) {
+    return depth; // Leaf node
+  }
+  
+  visited.add(file);
+  let maxDepth = depth;
+  
+  for (const dep of dependencies) {
+    const depDepth = calculateImportDepth(dep, graph, visited, depth + 1);
+    maxDepth = Math.max(maxDepth, depDepth);
+  }
+  
+  visited.delete(file); // Backtrack for other paths
+  return maxDepth;
+}
+```
+
+**Formula:**
+```
+depth(file) = 1 + max(depth(dependencies))
+where base case: depth(leaf) = 0
+```
+
+**Complexity:** O(V + E) where V = files, E = import edges
+
+#### 3. Context Budget Calculation (Transitive Sum)
+
+**Algorithm:** Sum token costs across entire dependency tree
+
+```typescript
+function calculateContextBudget(
+  file: string,
+  graph: DependencyGraph
+): number {
+  const node = graph.nodes.get(file);
+  if (!node) return 0;
+  
+  let totalTokens = node.tokenCost;
+  const deps = getTransitiveDependencies(file, graph);
+  
+  for (const dep of deps) {
+    const depNode = graph.nodes.get(dep);
+    if (depNode) {
+      totalTokens += depNode.tokenCost;
+    }
+  }
+  
+  return totalTokens;
+}
+```
+
+**Formula:**
+```
+budget(file) = tokens(file) + Σ tokens(transitive_deps)
+```
+
+**Complexity:** O(V + E) - traverses entire subgraph
+
+#### 4. Cohesion Score (Shannon Entropy)
+
+**Algorithm:** Measure how related exports are within a file
+
+```typescript
+function calculateCohesion(exports: ExportInfo[]): number {
+  if (exports.length <= 1) return 1; // Perfect cohesion
+  
+  // Group by inferred domain
+  const domains = exports.map(e => e.inferredDomain || 'unknown');
+  const domainCounts = new Map<string, number>();
+  
+  for (const domain of domains) {
+    domainCounts.set(domain, (domainCounts.get(domain) || 0) + 1);
+  }
+  
+  // Calculate Shannon entropy
+  const total = domains.length;
+  let entropy = 0;
+  
+  for (const count of domainCounts.values()) {
+    const p = count / total;
+    if (p > 0) {
+      entropy -= p * Math.log2(p);
+    }
+  }
+  
+  // Normalize to 0-1 (higher = better cohesion)
+  const maxEntropy = Math.log2(total);
+  return maxEntropy > 0 ? 1 - entropy / maxEntropy : 1;
+}
+```
+
+**Shannon Entropy Formula:**
+```
+H(X) = -Σ p(x_i) × log₂(p(x_i))
+
+where:
+- p(x_i) = domain_count_i / total_exports
+- Low entropy → single domain → high cohesion
+- High entropy → mixed domains → low cohesion
+
+Cohesion score = 1 - (H / H_max)
+```
+
+**Example:**
+```typescript
+// File with mixed concerns (low cohesion)
+export function getUserById(id) { ... }     // domain: user
+export function validateEmail(email) { ... } // domain: validation
+export function logError(err) { ... }       // domain: logging
+
+// domains = [user, validation, logging]
+// All different → High entropy → Low cohesion ≈ 0.33
+
+// File with single concern (high cohesion)
+export function getUserById(id) { ... }     // domain: user
+export function updateUser(data) { ... }    // domain: user
+export function deleteUser(id) { ... }      // domain: user
+
+// domains = [user, user, user]
+// All same → Zero entropy → Perfect cohesion = 1.0
+```
+
+#### 5. Fragmentation Score (Directory Scatter)
+
+**Algorithm:** Measure how scattered a domain is across directories
+
+```typescript
+function calculateFragmentation(
+  files: string[],
+  domain: string
+): number {
+  if (files.length <= 1) return 0; // Single file = no fragmentation
+  
+  // Extract unique directories
+  const directories = new Set(
+    files.map(f => f.split('/').slice(0, -1).join('/'))
+  );
+  
+  // Fragmentation ratio
+  return (directories.size - 1) / (files.length - 1);
+}
+```
+
+**Formula:**
+```
+fragmentation = (unique_directories - 1) / (total_files - 1)
+
+where:
+- 0 = all files in same directory (good)
+- 1 = all files in different directories (fragmented)
+```
+
+**Example:**
+```typescript
+// Low fragmentation (good)
+files = [
+  'src/user/get.ts',
+  'src/user/create.ts',
+  'src/user/update.ts'
+]
+directories = ['src/user'] = 1 unique
+fragmentation = (1 - 1) / (3 - 1) = 0 / 2 = 0.0
+
+// High fragmentation (bad)
+files = [
+  'src/api/user.ts',
+  'src/services/user.ts',
+  'src/models/user.ts',
+  'src/utils/user-helpers.ts'
+]
+directories = ['src/api', 'src/services', 'src/models', 'src/utils'] = 4 unique
+fragmentation = (4 - 1) / (4 - 1) = 3 / 3 = 1.0
+```
+
+#### 6. Circular Dependency Detection (Tarjan's Algorithm)
+
+**Algorithm:** DFS with recursion stack
+
+```typescript
+function detectCircularDependencies(
+  graph: DependencyGraph
+): string[][] {
+  const cycles: string[][] = [];
+  const visited = new Set<string>();
+  const recursionStack = new Set<string>();
+  
+  function dfs(file: string, path: string[]): void {
+    if (recursionStack.has(file)) {
+      // Found a cycle
+      const cycleStart = path.indexOf(file);
+      if (cycleStart !== -1) {
+        cycles.push([...path.slice(cycleStart), file]);
+      }
+      return;
+    }
+    
+    if (visited.has(file)) return;
+    
+    visited.add(file);
+    recursionStack.add(file);
+    path.push(file);
+    
+    const dependencies = graph.edges.get(file);
+    if (dependencies) {
+      for (const dep of dependencies) {
+        dfs(dep, [...path]);
+      }
+    }
+    
+    recursionStack.delete(file); // Backtrack
+  }
+  
+  for (const file of graph.nodes.keys()) {
+    if (!visited.has(file)) {
+      dfs(file, []);
+    }
+  }
+  
+  return cycles;
+}
+```
+
+**Complexity:** O(V + E) - visits each node/edge once
+
+#### 7. Module Clustering (Domain Grouping)
+
+**Algorithm:** Group files by inferred domain, calculate aggregate metrics
+
+```typescript
 function buildDependencyGraph(entryFile: string): DependencyGraph {
   const graph = new Map<string, Set<string>>();
   const visited = new Set<string>();
@@ -221,7 +491,154 @@ const fragmented = clusters.filter(c => c.fragmentationScore > 0.6);
 const plan = generateRefactoringPlan(fragmented);
 ```
 
-## 💰 SaaS Monetization Strategy
+## � Visualization Opportunities (SaaS)
+
+### Dashboard Views
+
+#### 1. **Dependency Graph Visualization**
+```
+Interactive force-directed graph:
+- Nodes = files (sized by token cost)
+- Edges = imports (directed arrows)
+- Color = import depth (green=0, yellow=3, red=5+)
+- Clusters = modules with high internal coupling
+
+Interaction:
+- Click node → show file details + metrics
+- Hover edge → import statement
+- Path highlighting: select 2 nodes → show dependency path
+- Filter: hide node_modules, show only cycles
+
+Library: Cytoscape.js or D3.js force layout
+```
+
+#### 2. **Context Budget Sunburst**
+```
+Hierarchical view of token costs:
+- Center = root directory
+- Rings = subdirectories
+- Segment size = token cost
+- Color intensity = context budget
+
+Interaction:
+- Click segment → zoom into directory
+- Tooltip: file name, token cost, depth
+- Compare mode: before/after refactoring
+
+Library: D3.js sunburst
+```
+
+#### 3. **Fragmentation Heatmap**
+```
+Matrix showing domain scatter:
+- Rows = domains (user, auth, order, etc.)
+- Columns = directories
+- Cell color = file count (white=0, red=many)
+- Ideal: single red cell per row (no scatter)
+
+Interaction:
+- Click cell → list files in domain+directory
+- Sort by: fragmentation score, token cost
+- Export consolidation plan
+
+Library: Plotly.js heatmap
+```
+
+#### 4. **Import Depth Histogram**
+```
+Distribution of import depths:
+- X-axis = depth (0, 1, 2, ... 10+)
+- Y-axis = file count
+- Bars = color-coded by severity
+- Overlay: threshold line
+
+Interaction:
+- Click bar → show files at that depth
+- Adjust threshold → highlight violations
+- Show: deepest import chains
+
+Library: Chart.js bar chart
+```
+
+#### 5. **Cohesion Scatter Plot**
+```
+Cohesion vs Fragmentation:
+- X-axis = cohesion score (0-1)
+- Y-axis = fragmentation score (0-1)
+- Points = domains/modules
+- Size = token cost
+- Quadrants: good (high cohesion, low frag), bad (low cohesion, high frag)
+
+Interaction:
+- Click point → domain details + refactoring plan
+- Lasso select → bulk action (consolidate these)
+- Time slider → show evolution
+
+Library: D3.js scatter plot
+```
+
+#### 6. **Circular Dependency Diagram**
+```
+Chord diagram for cycles:
+- Arc segments = files
+- Ribbons = circular dependencies
+- Thickness = dependency weight
+- Color = cycle group
+
+Interaction:
+- Hover ribbon → show import chain
+- Click segment → highlight all cycles involving file
+- Export: cycle-breaking suggestions
+
+Library: D3.js chord diagram
+```
+
+#### 7. **Time-Series Trends (Pro)**
+```
+Context cost over time:
+- X-axis = commit dates
+- Y-axis = total context budget / avg depth / fragmentation
+- Multiple lines = different metrics
+- Annotations = refactoring events, releases
+
+Interaction:
+- Zoom to date range
+- Compare branches (feature vs main)
+- Forecast: projected cost if trend continues
+
+Library: Chart.js time series
+```
+
+### Real-Time Analytics
+
+**Live Monitoring (Pro/Enterprise):**
+- WebSocket updates on git push
+- Real-time context budget calculator (type in editor → see impact)
+- Team dashboard: current metrics per repo
+- Alerts: "Context budget increased 15% this week"
+
+### Export Formats
+
+**Interactive Exports:**
+- HTML with embedded visualizations (works offline)
+- PDF reports with static charts (for stakeholders)
+- Mermaid diagrams for documentation
+- CSV/JSON for data analysis
+- GitHub/Notion integration (embed dashboards)
+
+### Comparative Views
+
+**Before/After Refactoring:**
+- Side-by-side comparison
+- Animated transitions (watch fragmentation decrease)
+- ROI calculator: "Consolidated 12 files → saved 8,450 tokens"
+
+**Team Benchmarks:**
+- Compare repos within organization
+- Industry averages by language/framework
+- Gamification: "Your repo is 35% more optimized than average"
+
+## �💰 SaaS Monetization Strategy
 
 ### Free Tier: CLI Analysis
 - One-time snapshot analysis

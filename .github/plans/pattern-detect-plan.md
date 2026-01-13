@@ -68,15 +68,65 @@ Result:
 
 **Key Innovation:** Jaccard similarity on token sets (not byte-level matching)
 
-```typescript
-// Jaccard similarity formula
-similarity = intersection(tokens1, tokens2) / union(tokens1, tokens2)
+#### Mathematical Foundation
 
-// Example:
-// Code 1: "async function getUser(id) { return await db.find(id); }"
-// Code 2: "function getUserData(userId) { return database.findOne(userId); }"
-// Tokens overlap: [function, get, user, id, return, find]
-// Similarity: ~0.65 (semantically similar, syntactically different)
+**Jaccard Index Formula:**
+```
+J(A, B) = |A ∩ B| / |A ∪ B|
+```
+
+Where:
+- A = token set from code block 1
+- B = token set from code block 2
+- |A ∩ B| = number of shared tokens
+- |A ∪ B| = total unique tokens across both sets
+
+**Example:**
+```typescript
+// Code Block 1
+async function getUser(id) { 
+  return await db.find(id); 
+}
+// Tokens: [async, function, get, user, id, return, await, db, find]
+
+// Code Block 2
+function getUserData(userId) { 
+  return database.findOne(userId); 
+}
+// Tokens: [function, get, user, data, userId, return, database, findOne]
+
+// Shared tokens: [function, get, user, return] = 4
+// Total unique: 13
+// Jaccard similarity: 4/13 ≈ 0.31
+```
+
+#### Data Structures
+
+**CodeBlock:**
+```typescript
+interface CodeBlock {
+  file: string;           // Source file path
+  startLine: number;      // Starting line number
+  endLine: number;        // Ending line number
+  content: string;        // Original code
+  normalized: string;     // Whitespace/comments removed
+  tokens: Set<string>;    // Semantic tokens
+  type: PatternType;      // Categorization
+  tokenCost: number;      // Estimated AI tokens
+}
+```
+
+**DuplicatePattern:**
+```typescript
+interface DuplicatePattern {
+  file1: string;
+  file2: string;
+  similarity: number;     // 0.0 to 1.0
+  type: PatternType;      // Shared category
+  tokenCost: number;      // Wasted tokens
+  blocks: [CodeBlock, CodeBlock];
+  recommendation: string; // Refactoring advice
+}
 ```
 
 ### Detection Strategy
@@ -247,7 +297,108 @@ function calculateSimilarity(block1: CodeBlock, block2: CodeBlock): number {
   "eslint": "^9.18.0"
 }
 
-## 💰 SaaS Monetization Strategy
+## � Visualization Opportunities (SaaS)
+
+### Dashboard Views
+
+#### 1. **Pattern Network Graph**
+```
+Visualize similarity relationships as force-directed graph:
+- Nodes = code blocks (sized by token cost)
+- Edges = similarity > threshold (thickness = similarity score)
+- Color = pattern type (API=blue, validator=green, etc.)
+- Clusters = groups of similar patterns
+
+Interaction:
+- Click node → show code diff
+- Hover edge → similarity score tooltip
+- Filter by pattern type
+- Time slider → show evolution
+
+Library: D3.js force simulation
+```
+
+#### 2. **Similarity Heatmap**
+```
+Matrix view of all-vs-all similarity:
+- X/Y axes = files
+- Cell color = similarity intensity (white=0, red=1)
+- Diagonal = self-similarity (always 1)
+- Clusters visible as red blocks
+
+Interaction:
+- Click cell → side-by-side code comparison
+- Reorder by: similarity, file path, pattern type
+- Export to CSV/PDF
+
+Library: Plotly.js heatmap
+```
+
+#### 3. **Token Cost Treemap**
+```
+Hierarchical view of wasted tokens:
+- Rectangle size = token cost
+- Color = pattern type
+- Nesting = directory structure
+- Label = file name + cost
+
+Interaction:
+- Drill down into directories
+- Sort by: cost, similarity, count
+- Show/hide pattern types
+
+Library: D3.js treemap
+```
+
+#### 4. **Trend Line Chart**
+```
+Time-series analysis (Pro tier):
+- X-axis = commit dates
+- Y-axis = duplicate count / token cost
+- Multiple lines = pattern types
+- Annotations = refactoring events
+
+Interaction:
+- Zoom to date range
+- Compare branches
+- Overlay team activity
+
+Library: Chart.js time series
+```
+
+#### 5. **Refactoring Priority List**
+```
+Sortable table with filters:
+- Pattern type | Files | Similarity | Token cost | ROI
+- Sort by any column
+- Filter by threshold, type, directory
+- Export to Jira/Linear/GitHub Issues
+
+Interaction:
+- Click row → open refactoring plan
+- Bulk select → create batch task
+- Mark as "won't fix" → hide from reports
+
+Library: AG Grid / TanStack Table
+```
+
+### Real-Time Analytics
+
+**WebSocket updates for Pro tier:**
+- Live duplicate detection on git push
+- Notifications when similarity threshold exceeded
+- Team dashboard with current metrics
+- Leaderboard: teams with lowest duplication rates
+
+### Export Formats
+
+**Interactive Exports:**
+- HTML report with embedded D3.js visualizations
+- PDF with static charts (using Puppeteer)
+- CSV/JSON for data analysis
+- Markdown for GitHub wiki
+
+## �💰 SaaS Monetization Strategy
 
 ### Free Tier: CLI Analysis
 ```bash
