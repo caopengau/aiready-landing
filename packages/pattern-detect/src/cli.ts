@@ -16,17 +16,18 @@ program
   .version('0.1.0')
   .addHelpText('after', '\nCONFIGURATION:\n  Supports config files: aiready.json, aiready.config.json, .aiready.json, .aireadyrc.json, aiready.config.js, .aireadyrc.js\n  CLI options override config file settings')
   .argument('<directory>', 'Directory to analyze')
-  .option('-s, --similarity <number>', 'Minimum similarity score (0-1)', '0.40')
-  .option('-l, --min-lines <number>', 'Minimum lines to consider', '5')
-  .option('--batch-size <number>', 'Batch size for comparisons', '100')
+  .option('-s, --similarity <number>', 'Minimum similarity score (0-1)')
+  .option('-l, --min-lines <number>', 'Minimum lines to consider')
+  .option('--batch-size <number>', 'Batch size for comparisons')
   .option('--no-approx', 'Disable approximate candidate selection (faster on small repos, slower on large)')
-  .option('--min-shared-tokens <number>', 'Minimum shared tokens to consider a candidate', '8')
-  .option('--max-candidates <number>', 'Maximum candidates per block', '100')
+  .option('--min-shared-tokens <number>', 'Minimum shared tokens to consider a candidate')
+  .option('--max-candidates <number>', 'Maximum candidates per block')
   .option('--no-stream-results', 'Disable incremental output (default: enabled)')
   .option('--include <patterns>', 'File patterns to include (comma-separated)')
   .option('--exclude <patterns>', 'File patterns to exclude (comma-separated)')
-  .option('--severity <level>', 'Filter by severity: critical|high|medium|all', 'all')
+  .option('--severity <level>', 'Filter by severity: critical|high|medium|all')
   .option('--include-tests', 'Include test files in analysis (excluded by default)')
+  .option('--max-results <number>', 'Maximum number of results to show in console output')
   .option(
     '-o, --output <format>',
     'Output format: console, json, html',
@@ -54,6 +55,7 @@ program
       exclude: undefined,
       severity: 'all',
       includeTests: false,
+      maxResults: 10,
     };
 
     // Merge config with defaults
@@ -73,6 +75,7 @@ program
       exclude: options.exclude?.split(',') || mergedConfig.exclude,
       severity: options.severity || mergedConfig.severity,
       includeTests: options.includeTests || mergedConfig.includeTests,
+      maxResults: options.maxResults ? parseInt(options.maxResults) : mergedConfig.maxResults,
     };
 
     // Handle test file exclusion by default
@@ -197,10 +200,10 @@ program
         filteredDuplicates = rawDuplicates.filter(dup => dup.similarity >= threshold);
       }
 
-      // Sort by similarity (highest first) and take top 5-10
+      // Sort by similarity (highest first) and take top N
       const topDuplicates = filteredDuplicates
         .sort((a, b) => b.similarity - a.similarity)
-        .slice(0, 10);
+        .slice(0, finalOptions.maxResults);
 
       topDuplicates.forEach((dup, idx) => {
         const severity = dup.similarity > 0.95 ? 'CRITICAL' : dup.similarity > 0.9 ? 'HIGH' : 'MEDIUM';

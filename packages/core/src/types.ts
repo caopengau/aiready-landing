@@ -60,6 +60,7 @@ export interface AIReadyConfig {
       minSharedTokens?: number;
       maxCandidatesPerBlock?: number;
       streamResults?: boolean;
+      maxResults?: number;
     };
     'context-analyzer'?: {
       maxDepth?: number;
@@ -68,6 +69,7 @@ export interface AIReadyConfig {
       maxFragmentation?: number;
       focus?: 'fragmentation' | 'cohesion' | 'depth' | 'all';
       includeNodeModules?: boolean;
+      maxResults?: number;
     };
   };
 

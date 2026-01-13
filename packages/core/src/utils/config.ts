@@ -62,8 +62,8 @@ export function mergeConfigWithDefaults(
   if (userConfig.tools) {
     for (const [toolName, toolConfig] of Object.entries(userConfig.tools)) {
       if (typeof toolConfig === 'object' && toolConfig !== null) {
-        // For pattern-detect tool, merge options directly into result
-        if (toolName === 'pattern-detect') {
+        // For pattern-detect and context-analyzer tools, merge options directly into result
+        if (toolName === 'pattern-detect' || toolName === 'context-analyzer') {
           Object.assign(result, toolConfig);
         }
         // Add other tool configs under their names for future use

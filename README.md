@@ -82,12 +82,14 @@ AIReady supports configuration files for persistent settings. Create one of thes
       "minSimilarity": 0.5,
       "minLines": 8,
       "severity": "high",
-      "includeTests": false
+      "includeTests": false,
+      "maxResults": 10
     },
     "context-analyzer": {
       "maxDepth": 5,
       "maxContextBudget": 100000,
-      "minCohesion": 0.7
+      "minCohesion": 0.7,
+      "maxResults": 10
     }
   },
   "output": {
@@ -98,6 +100,8 @@ AIReady supports configuration files for persistent settings. Create one of thes
 ```
 
 CLI options override config file settings.
+
+**Note:** Console output is limited by default to prevent overwhelming displays. Use `--max-results` to control how many items are shown, or `--output json` for complete results.
 
 ## 🏗️ Development
 
