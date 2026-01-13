@@ -41,6 +41,8 @@ npx @aiready/context-analyzer ./src --output json
 npm install -g @aiready/pattern-detect @aiready/context-analyzer
 ```
 
+> **💡 Smart Defaults:** Both tools automatically adjust their sensitivity based on your codebase size to show ~10 most serious issues. Use threshold options to tune for more or fewer results.
+
 ### Using Unified CLI
 
 ```bash
