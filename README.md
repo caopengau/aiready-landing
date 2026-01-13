@@ -141,14 +141,17 @@ pnpm test
 pnpm dev
 ```
 
-## 📊 SaaS Platform
+## 🚧 Project Status
 
-Free tools provide basic analysis. [AIReady Pro](https://aiready.dev) offers:
-- Historical trend analysis
-- Team benchmarking
-- Custom rule engines
-- Integration APIs
-- Automated fix suggestions
+AIReady is currently tool-only. The website and hosted SaaS are not live yet. The open-source CLI and packages provide:
+- Pattern detection and context cost analysis
+- Consistency checks (naming and patterns)
+- Unified CLI with JSON/console outputs
+
+Roadmap (planned, not yet available):
+- Historical trend analysis and team benchmarking
+- Custom rule engines and integration APIs
+- Automated fix suggestions and CI/CD integration
 
 ## 📄 License
 
