@@ -24,10 +24,20 @@ aiready-patterns ./src
 
 AI tools generate similar code in different ways because they lack awareness of your codebase patterns. This tool:
 
-- **Semantic detection**: Finds functionally similar code (not just copy-paste)
+- **Semantic detection**: Finds functionally similar code (not just copy-paste) using Jaccard similarity on AST tokens
 - **Pattern classification**: Groups duplicates by type (API handlers, validators, utilities, etc.)
 - **Token cost analysis**: Shows wasted AI context budget
 - **Refactoring guidance**: Suggests specific fixes per pattern type
+
+### How It Works
+
+The tool uses **Jaccard similarity** to compare code semantically:
+1. Parses TypeScript/JavaScript files into Abstract Syntax Trees (AST)
+2. Extracts semantic tokens (identifiers, operators, keywords) from each function
+3. Calculates Jaccard similarity between token sets: `|A ∩ B| / |A ∪ B|`
+4. Groups similar functions above the similarity threshold
+
+This approach catches duplicates even when variable names or minor logic differs.
 
 ### Example Output
 
