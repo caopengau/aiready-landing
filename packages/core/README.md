@@ -44,20 +44,7 @@ const tokenCount = estimateTokens(code);
 console.log(`Estimated tokens: ${tokenCount}`);
 ```
 
-### Similarity Detection
 
-```typescript
-import { similarityScore, levenshteinDistance } from '@aiready/core';
-
-const code1 = 'function handleUser(user) { ... }';
-const code2 = 'function handlePost(post) { ... }';
-
-const similarity = similarityScore(code1, code2);
-console.log(`Similarity: ${(similarity * 100).toFixed(1)}%`);
-
-const distance = levenshteinDistance(code1, code2);
-console.log(`Edit distance: ${distance}`);
-```
 
 ### TypeScript Types
 
@@ -104,8 +91,6 @@ const result: AnalysisResult = {
 ### Metrics
 
 - **`estimateTokens(text: string): number`** - Estimate token count (~4 chars = 1 token)
-- **`levenshteinDistance(str1: string, str2: string): number`** - Calculate edit distance
-- **`similarityScore(str1: string, str2: string): number`** - Calculate similarity (0-1)
 
 ### AST Parsing
 
