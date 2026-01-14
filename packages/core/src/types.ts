@@ -73,6 +73,10 @@ export interface AIReadyConfig {
       focus?: 'fragmentation' | 'cohesion' | 'depth' | 'all';
       includeNodeModules?: boolean;
       maxResults?: number;
+      // Domain inference configuration
+      domainKeywords?: string[]; // project-specific domain keywords (e.g., ['txn','transaction','cust'])
+      domainPatterns?: string[]; // regex strings to match domains (e.g., ['^ord(er)?$', '^(inv|invoice)$'])
+      pathDomainMap?: Record<string, string>; // map of path segment -> domain (e.g., {'orders': 'order'})
     };
   };
 
