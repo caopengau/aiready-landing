@@ -2,6 +2,8 @@
 
 > AI-readiness analysis tools for reducing tech debt and optimizing codebases for AI adoption
 
+🌐 **[Visit our website](http://localhost:3001)** | 📦 [npm](https://www.npmjs.com/package/@aiready/cli) | ⭐ [GitHub](https://github.com/caopengau/aiready)
+
 ## 🎯 Mission
 
 As AI becomes deeply integrated into SDLC, codebases accumulate tech debt faster due to:
@@ -167,6 +169,23 @@ Roadmap (planned, not yet available):
 - Custom rule engines and integration APIs
 - Automated fix suggestions and CI/CD integration
 
-## 📄 License
+## � Stats & Analytics
+
+Track package downloads, GitHub metrics, and growth:
+
+```bash
+# Show current stats
+make stats
+
+# Export for historical tracking
+make stats-export
+
+# Weekly report with growth tips
+make stats-weekly
+```
+
+See [Tracking Stats Guide](./docs/TRACKING-STATS.md) for complete details.
+
+## �📄 License
 
 MIT - See LICENSE in individual packages

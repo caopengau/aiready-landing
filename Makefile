@@ -5,6 +5,7 @@ include makefiles/Makefile.setup.mk
 include makefiles/Makefile.build.mk
 include makefiles/Makefile.test.mk
 include makefiles/Makefile.release.mk  # This includes Makefile.publish.mk
+include makefiles/Makefile.stats.mk
 
 # Dynamically resolve pnpm path for use in all commands
 PNPM := $(shell command -v pnpm)
@@ -26,6 +27,7 @@ help: ## Show all targets and descriptions in a markdown table (one aligned tabl
 			test)    color=$$(tput setaf 3); emoji="🧪";; \
 			release) color=$$(tput setaf 1); emoji="🚀";; \
 			publish) color=$$(tput setaf 1); emoji="🚚";; \
+			stats)   color=$$(tput setaf 6); emoji="📊";; \
 			*)       color=$$(tput setaf 7); emoji="📦";; \
 		esac; \
 		echo ""; \
