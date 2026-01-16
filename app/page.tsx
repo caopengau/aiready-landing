@@ -304,6 +304,9 @@ export default function HomePage() {
               <Link href="https://www.npmjs.com/package/@aiready/cli" target="_blank" className="text-sm text-slate-600 hover:text-slate-900">
                 npm
               </Link>
+              <Link href="https://github.com/caopengau/aiready-landing" target="_blank" className="text-sm text-slate-600 hover:text-slate-900">
+                GitHub
+              </Link>
               <Link href="https://twitter.com/aireadytools" target="_blank" className="text-sm text-slate-600 hover:text-slate-900">
                 Twitter
               </Link>
