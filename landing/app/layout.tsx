@@ -13,23 +13,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AIReady - Make Your Codebase AI-Ready",
+  title: "aiready - Make Your Codebase AI-Ready",
   description: "Free tools to optimize your codebase for AI collaboration. Detect semantic duplicates, analyze context windows, and maintain consistency that AI models understand.",
   keywords: "AI, codebase, optimization, semantic analysis, context window, consistency, TypeScript, JavaScript, developer tools",
-  authors: [{ name: "AIReady Team" }],
-  creator: "AIReady",
-  publisher: "AIReady",
+  authors: [{ name: "aiready Team" }],
+  creator: "aiready",
+  publisher: "aiready",
   openGraph: {
     title: "AIReady - Make Your Codebase AI-Ready",
     description: "Free tools to optimize your codebase for AI collaboration. Detect semantic duplicates, analyze context windows, and maintain consistency.",
-    url: "https://aiready.dev",
-    siteName: "AIReady",
+    url: "https://getaiready.dev",
+    siteName: "aiready",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "AIReady - AI-Ready Codebase Tools",
+        alt: "aiready - AI-Ready Codebase Tools",
       },
     ],
     locale: "en_US",
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AIReady - Make Your Codebase AI-Ready",
-    description: "Free tools to optimize your codebase for AI collaboration.",
+    title: "aiready - Make Your Codebase AI-Ready",
+    description: "Free tools to optimize your codebase for AI collaboration. Detect semantic duplicates, analyze context windows, and maintain consistency that AI models understand.",
     images: ["/og-image.png"],
     creator: "@aireadytools",
   },

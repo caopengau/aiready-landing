@@ -2,7 +2,7 @@
 
 > AI-readiness analysis tools for reducing tech debt and optimizing codebases for AI adoption
 
-🌐 **[Visit our website](http://localhost:3001)** | 📦 [npm](https://www.npmjs.com/package/@aiready/cli) | ⭐ [GitHub](https://github.com/caopengau/aiready)
+🌐 **[Visit our website](https://getaiready.dev)** | 📦 [npm](https://www.npmjs.com/package/@aiready/cli) | ⭐ [GitHub](https://github.com/caopengau/aiready)
 
 ## 🎯 Mission
 

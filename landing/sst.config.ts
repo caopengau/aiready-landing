@@ -42,8 +42,10 @@ export default $config({
         NEXT_PUBLIC_REQUEST_URL: requestApi.url,
       },
       domain: {
-        name: process.env.DOMAIN_NAME || "aiready.dev",
-        dns: sst.cloudflare.dns(),
+        name: process.env.DOMAIN_NAME || "getaiready.dev",
+        dns: sst.cloudflare.dns({
+          zone: "50eb7dcadc84c58ab34583742db0b671",
+        }),
       },
     });
 

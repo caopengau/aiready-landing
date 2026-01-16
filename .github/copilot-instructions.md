@@ -67,5 +67,6 @@ make push-all  # ← This syncs ALL repos automatically
 - Reference existing spokes (@aiready/pattern-detect)
 - Review core types and CLI interface
 - Keep spokes focused on one job
+- **Web Deployment:** Load `landing-deployment` from doc-mapping.json for Vercel/AWS deployment guides
 - **GIT:** Always load `git-workflow` sub-instructions before git operations
 - **GIT:** Use `make push-all` instead of direct git commands

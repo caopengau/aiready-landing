@@ -9,7 +9,7 @@ export default function HomePage() {
         <nav className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              AIReady
+              aiready
             </span>
           </div>
           <div className="flex items-center gap-6">
@@ -178,7 +178,7 @@ export default function HomePage() {
             Loved by Developers
           </h2>
           <p className="text-center text-slate-600 mb-12">
-            See what teams are saying about AIReady
+            See what teams are saying about aiready
           </p>
           
           <div className="grid md:grid-cols-2 gap-6">
@@ -189,7 +189,7 @@ export default function HomePage() {
                 ))}
               </div>
               <p className="text-slate-700 mb-4">
-                "AIReady helped us identify 200+ semantic duplicates across our React components. 
+                "aiready helped us identify 200+ semantic duplicates across our React components. 
                 Our AI context windows are now 35% more efficient."
               </p>
               <div className="text-sm text-slate-600">
@@ -250,7 +250,7 @@ export default function HomePage() {
           <div className="space-y-6">
             <div className="border-b border-slate-200 pb-6">
               <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                Is AIReady really free?
+                Is aiready really free?
               </h3>
               <p className="text-slate-600">
                 Yes! All our tools are free and open source. You can run them locally with 
@@ -298,13 +298,13 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-slate-600">
-              © 2025 AIReady. Open source under MIT License.
+              © 2025 aiready. Open source under MIT License.
             </div>
             <div className="flex gap-6">
               <Link href="https://www.npmjs.com/package/@aiready/cli" target="_blank" className="text-sm text-slate-600 hover:text-slate-900">
                 npm
               </Link>
-              <Link href="https://github.com/caopengau/aiready" target="_blank" className="text-sm text-slate-600 hover:text-slate-900">
+              <Link href="https://github.com/caopengau/aiready-landing" target="_blank" className="text-sm text-slate-600 hover:text-slate-900">
                 GitHub
               </Link>
               <Link href="https://twitter.com/aireadytools" target="_blank" className="text-sm text-slate-600 hover:text-slate-900">

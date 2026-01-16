@@ -111,6 +111,10 @@ All shared TypeScript interfaces and types for analysis results, issues, metrics
 
 MIT - See [LICENSE](./LICENSE)
 
+## 🌐 Visit Our Website
+
+**Learn about AIReady and try our tools:** [getaiready.dev](https://getaiready.dev)
+
 ---
 
 **Part of the [AIReady](https://github.com/caopengau/aiready) toolkit** | Docs: see the monorepo [README](https://github.com/caopengau/aiready#readme) | Status: website not live yet

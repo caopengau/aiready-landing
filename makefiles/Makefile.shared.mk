@@ -2,6 +2,17 @@
 # Makefile.shared: Common macros, variables, and environment config for all spokes
 ###############################################################################
 
+# Load environment variables from .env if present (not committed)
+ifneq (,$(wildcard .env))
+	include .env
+	export
+endif
+# Also load landing-specific env if present
+ifneq (,$(wildcard landing/.env))
+	include landing/.env
+	export
+endif
+
 # Dynamically discover all packages in packages/ directory
 ALL_SPOKES := $(notdir $(wildcard packages/*))
 # Smart release order: core first, cli last, others alphabetical
@@ -16,7 +27,12 @@ AWS_PROFILE ?= aiready
 AWS_REGION ?= ap-southeast-2
 # Notifications (defaults for solo founder)
 SES_TO_EMAIL ?= caopengau@gmail.com
-SLACK_WEBHOOK_URL ?=
+
+# Cloudflare DNS (optional; do not commit secrets)
+CLOUDFLARE_API_TOKEN ?=
+CLOUDFLARE_ACCOUNT_ID ?=
+CLOUDFLARE_ZONE_ID ?=
+DOMAIN_NAME ?= getaiready.dev
 
 # Color definitions
 RED        := $(shell printf '\033[0;31m')    # color: #FF0000

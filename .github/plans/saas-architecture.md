@@ -402,7 +402,7 @@ Response:
   "analysisId": "uuid",
   "status": "processing",
   "estimatedTime": 30, // seconds
-  "dashboardUrl": "https://app.aiready.dev/repos/:id/analysis/:analysisId"
+  "dashboardUrl": "https://app.getaiready.dev/repos/:id/analysis/:analysisId"
 }
 ```
 

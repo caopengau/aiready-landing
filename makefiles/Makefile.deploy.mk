@@ -12,8 +12,9 @@ deploy-landing: ## Deploy landing page to AWS (dev environment)
 	@echo "$(CYAN)Using AWS Profile: $(AWS_PROFILE)$(NC)"
 	@echo "$(CYAN)Using AWS Region: $(AWS_REGION)$(NC)"
 	@cd landing && \
-		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) \
-		SLACK_WEBHOOK_URL="$(SLACK_WEBHOOK_URL)" SES_TO_EMAIL="$(SES_TO_EMAIL)" \
+		set -a && [ -f .env ] && . ./.env || true && set +a && \
+		AWS_PROFILE=$${AWS_PROFILE:-$(AWS_PROFILE)} AWS_REGION=$${AWS_REGION:-$(AWS_REGION)} \
+		CLOUDFLARE_API_TOKEN="$${CLOUDFLARE_API_TOKEN:-$(CLOUDFLARE_API_TOKEN)}" CLOUDFLARE_ACCOUNT_ID="$${CLOUDFLARE_ACCOUNT_ID:-$(CLOUDFLARE_ACCOUNT_ID)}" CLOUDFLARE_ZONE_ID="$${CLOUDFLARE_ZONE_ID:-$(CLOUDFLARE_ZONE_ID)}" \
 		sst deploy
 	@$(call log_success,Landing page deployed to dev)
 
@@ -23,8 +24,9 @@ deploy-landing-prod: ## Deploy landing page to AWS (production)
 	@echo "$(CYAN)Using AWS Profile: $(AWS_PROFILE)$(NC)"
 	@echo "$(CYAN)Using AWS Region: $(AWS_REGION)$(NC)"
 	@cd landing && \
-		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) \
-		SLACK_WEBHOOK_URL="$(SLACK_WEBHOOK_URL)" SES_TO_EMAIL="$(SES_TO_EMAIL)" \
+		set -a && [ -f .env ] && . ./.env || true && set +a && \
+		AWS_PROFILE=$${AWS_PROFILE:-$(AWS_PROFILE)} AWS_REGION=$${AWS_REGION:-$(AWS_REGION)} \
+		CLOUDFLARE_API_TOKEN="$${CLOUDFLARE_API_TOKEN:-$(CLOUDFLARE_API_TOKEN)}" CLOUDFLARE_ACCOUNT_ID="$${CLOUDFLARE_ACCOUNT_ID:-$(CLOUDFLARE_ACCOUNT_ID)}" CLOUDFLARE_ZONE_ID="$${CLOUDFLARE_ZONE_ID:-$(CLOUDFLARE_ZONE_ID)}" \
 		sst deploy --stage production
 	@$(call log_success,Landing page deployed to production)
 
@@ -69,6 +71,15 @@ deploy-landing-status: ## Show current deployment status
 	@cd landing && \
 		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) sst list || \
 		echo "$(YELLOW)No deployments found$(NC)"
+
+domain-status: ## Check Cloudflare zone status and nameservers
+	@$(call log_step,Checking Cloudflare zone status)
+	@cd landing && \
+		set -a && [ -f .env ] && . ./.env || true && set +a && \
+		if [ -z "$$CLOUDFLARE_API_TOKEN" ] || [ -z "$$CLOUDFLARE_ACCOUNT_ID" ]; then \
+			echo "$(YELLOW)Missing CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID$(NC)"; exit 1; \
+		fi; \
+		curl -s -H "Authorization: Bearer $$CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/zones?name=$${DOMAIN_NAME:-getaiready.dev}&account.id=$$CLOUDFLARE_ACCOUNT_ID" | jq '{success, result: ( .result[] | {id, name, status, name_servers, account: .account.id} )}' || true
 
 leads-export: ## Export submissions from S3 to local CSV
 	@$(call log_step,Exporting leads from S3)

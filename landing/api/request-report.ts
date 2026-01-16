@@ -61,26 +61,13 @@ export async function handler(event: Event) {
       ContentType: "application/json"
     }));
 
-    // Optional: notify Slack
-    if (slackWebhook) {
-      try {
-        await fetch(slackWebhook, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            text: `New AIReady report request\nEmail: ${email}\nRepo: ${repoUrl}`
-          })
-        });
-      } catch {}
-    }
-
     // Optional: notify via SES email (to founder)
     if (sesToEmail) {
       try {
         await ses.send(new SendEmailCommand({
           Destination: { ToAddresses: [sesToEmail] },
           Message: {
-            Subject: { Data: "New AIReady Report Request" },
+            Subject: { Data: "New aiready Report Request" },
             Body: {
               Text: { Data: `Email: ${email}\nRepo: ${repoUrl}\nNotes: ${notes}\n\nS3 Key: ${key}` }
             }
