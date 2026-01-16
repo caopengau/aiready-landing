@@ -1,4 +1,5 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 type Event = {
   requestContext?: { http?: { method?: string } };
@@ -8,6 +9,9 @@ type Event = {
 
 const bucket = process.env.SUBMISSIONS_BUCKET!;
 const s3 = new S3Client({});
+const sesToEmail = process.env.SES_TO_EMAIL || "";
+const ses = new SESClient({});
+const slackWebhook = process.env.SLACK_WEBHOOK_URL || "";
 
 export async function handler(event: Event) {
   const method = event.requestContext?.http?.method || "POST";
@@ -57,6 +61,35 @@ export async function handler(event: Event) {
       Body: Buffer.from(JSON.stringify(payload, null, 2)),
       ContentType: "application/json"
     }));
+
+    // Optional: notify Slack
+    if (slackWebhook) {
+      try {
+        await fetch(slackWebhook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            text: `New AIReady report request\nEmail: ${email}\nRepo: ${repoUrl}`
+          })
+        });
+      } catch {}
+    }
+
+    // Optional: notify via SES email (to founder)
+    if (sesToEmail) {
+      try {
+        await ses.send(new SendEmailCommand({
+          Destination: { ToAddresses: [sesToEmail] },
+          Message: {
+            Subject: { Data: "New AIReady Report Request" },
+            Body: {
+              Text: { Data: `Email: ${email}\nRepo: ${repoUrl}\nNotes: ${notes}\n\nS3 Key: ${key}` }
+            }
+          },
+          Source: sesToEmail,
+        }));
+      } catch {}
+    }
 
     return json(200, { ok: true });
   } catch (err: any) {

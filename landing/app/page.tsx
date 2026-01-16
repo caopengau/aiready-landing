@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import RequestForm from '../components/RequestForm'
 
 export default function HomePage() {
   return (
@@ -192,8 +193,7 @@ export default function HomePage() {
 
       {/* Request Report Form */}
       <section className="container mx-auto px-4 py-20">
-        {/* @ts-expect-error Server Component importing client */}
-        {require('../components/RequestForm').default()}
+        <RequestForm />
       </section>
 
       {/* Footer */}

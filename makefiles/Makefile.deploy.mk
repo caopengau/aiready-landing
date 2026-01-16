@@ -12,7 +12,9 @@ deploy-landing: ## Deploy landing page to AWS (dev environment)
 	@echo "$(CYAN)Using AWS Profile: $(AWS_PROFILE)$(NC)"
 	@echo "$(CYAN)Using AWS Region: $(AWS_REGION)$(NC)"
 	@cd landing && \
-		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) sst deploy
+		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) \
+		SLACK_WEBHOOK_URL="$(SLACK_WEBHOOK_URL)" SES_TO_EMAIL="$(SES_TO_EMAIL)" \
+		sst deploy
 	@$(call log_success,Landing page deployed to dev)
 
 deploy-landing-prod: ## Deploy landing page to AWS (production)
@@ -21,7 +23,9 @@ deploy-landing-prod: ## Deploy landing page to AWS (production)
 	@echo "$(CYAN)Using AWS Profile: $(AWS_PROFILE)$(NC)"
 	@echo "$(CYAN)Using AWS Region: $(AWS_REGION)$(NC)"
 	@cd landing && \
-		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) sst deploy --stage production
+		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) \
+		SLACK_WEBHOOK_URL="$(SLACK_WEBHOOK_URL)" SES_TO_EMAIL="$(SES_TO_EMAIL)" \
+		sst deploy --stage production
 	@$(call log_success,Landing page deployed to production)
 
 deploy-landing-remove: ## Remove landing page deployment (dev)
@@ -65,3 +69,19 @@ deploy-landing-status: ## Show current deployment status
 	@cd landing && \
 		AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) sst list || \
 		echo "$(YELLOW)No deployments found$(NC)"
+
+leads-export: ## Export submissions from S3 to local CSV
+	@$(call log_step,Exporting leads from S3)
+	@mkdir -p .aiready/leads/submissions
+	@bucket=$$(cd landing && AWS_PROFILE=$(AWS_PROFILE) AWS_REGION=$(AWS_REGION) sst list | awk '/submissionsBucket:/ {print $$2}'); \
+	if [ -z "$$bucket" ]; then \
+		echo "$(RED)✗ Could not detect submissions bucket$(NC)"; exit 1; \
+	fi; \
+	aws s3 sync s3://$$bucket/submissions .aiready/leads/submissions --delete --profile $(AWS_PROFILE) || exit 1; \
+	jq -r '["email","repoUrl","receivedAt"], (.aiready/leads/submissions/*.json | map( [ .email, .repoUrl, .receivedAt ] ))[] | @csv' \
+		<(jq -s '.' .aiready/leads/submissions/*.json 2>/dev/null) > .aiready/leads/leads.csv 2>/dev/null || \
+		echo "$(YELLOW)No submissions found yet$(NC)"; \
+	echo "$(GREEN)✓ Exported to .aiready/leads/leads.csv$(NC)"
+
+leads-open: ## Open leads folder
+	@open .aiready/leads 2>/dev/null || xdg-open .aiready/leads 2>/dev/null || echo "Path: .aiready/leads"
