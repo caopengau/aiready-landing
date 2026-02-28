@@ -7,7 +7,7 @@ const Post = () => (
 
     <div className="my-8 max-w-4xl mx-auto">
       <img
-        src="/series-7-future-human-friendly.png"
+        src="/part-7-future-human-friendly-code.png"
         alt="The Future is Human-Friendly Code - cover"
         className="w-full rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800"
       />
@@ -60,7 +60,7 @@ const Post = () => (
       <strong>AIReady</strong>:
     </p>
 
-    <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4 italic text-lg text-slate-700 dark:text-zinc-300">
+    <blockquote className="border-l-4 border-blue-500 pl-4 py-2 my-4 italic text-lg opacity-90">
       "The same patterns that make a codebase readable for an AI are the same
       patterns that make it manageable for a human."
     </blockquote>

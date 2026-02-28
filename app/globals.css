@@ -482,57 +482,54 @@ h3 {
   line-height: 1.8;
 }
 
-/* Dark mode prose */
-.dark .prose {
-  color: #d1d5db;
+/* Dark mode prose - Support both system preference and manual .dark class */
+@media (prefers-color-scheme: dark) {
+  .prose {
+    color: #f1f5f9;
+  }
+  .prose a {
+    color: #60a5fa;
+  }
+  .prose strong,
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    color: #ffffff;
+  }
+  .prose code {
+    color: #38bdf8;
+    background-color: #1e293b;
+  }
+  .prose blockquote {
+    color: #e2e8f0;
+    border-left-color: #3b82f6;
+  }
+  .prose hr {
+    border-color: #334155;
+  }
 }
-
+.dark .prose {
+  color: #f1f5f9;
+}
 .dark .prose a {
   color: #60a5fa;
 }
-
-.dark .prose strong {
-  color: #f9fafb;
-}
-
+.dark .prose strong,
 .dark .prose h1,
 .dark .prose h2,
 .dark .prose h3,
 .dark .prose h4 {
-  color: #f9fafb;
+  color: #ffffff;
 }
-
 .dark .prose code {
-  color: #f9fafb;
-  background-color: #374151;
+  color: #38bdf8;
+  background-color: #1e293b;
 }
-
 .dark .prose blockquote {
-  color: #f9fafb;
-  border-left-color: #374151;
+  color: #e2e8f0;
+  border-left-color: #3b82f6;
 }
-
 .dark .prose hr {
-  border-color: #374151;
-}
-
-/* Prose slate & invert variants (simplified) */
-.prose-slate {
-  color: #334155;
-}
-
-.prose-invert {
-  color: #d1d5db;
-}
-
-.prose-invert a {
-  color: #60a5fa;
-}
-
-.prose-invert strong,
-.prose-invert h1,
-.prose-invert h2,
-.prose-invert h3,
-.prose-invert h4 {
-  color: #f9fafb;
+  border-color: #334155;
 }

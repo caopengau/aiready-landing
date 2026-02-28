@@ -147,7 +147,7 @@
 
 /* Dark mode */
 .dark .prose {
-  color: #d1d5db;
+  color: #f1f5f9;
 }
 
 .dark .prose a {
@@ -159,21 +159,21 @@
 .dark .prose h2,
 .dark .prose h3,
 .dark .prose h4 {
-  color: #f9fafb;
+  color: #ffffff;
 }
 
 .dark .prose code {
-  color: #f9fafb;
-  background-color: #374151;
+  color: #38bdf8;
+  background-color: #1e293b;
 }
 
 .dark .prose blockquote {
-  color: #f9fafb;
-  border-left-color: #374151;
+  color: #e2e8f0;
+  border-left-color: #3b82f6;
 }
 
 .dark .prose hr {
-  border-color: #374151;
+  border-color: #334155;
 }
 
 /* Prose variants */

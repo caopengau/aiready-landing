@@ -134,33 +134,95 @@
   padding: 0;
 }
 
-/* Dark mode */
+/* Dark mode - Support both system preference and manual .dark class */
+@media (prefers-color-scheme: dark) {
+  .proseContent {
+    color: #ffffff !important;
+  }
+  .proseContent p,
+  .proseContent li,
+  .proseContent div,
+  .proseContent span {
+    color: #ffffff !important;
+  }
+  .proseContent a {
+    color: #60a5fa !important;
+    text-decoration: underline !important;
+  }
+  .proseContent strong,
+  .proseContent h1,
+  .proseContent h2,
+  .proseContent h3,
+  .proseContent h4 {
+    color: #ffffff !important;
+  }
+  .proseContent code {
+    color: #38bdf8 !important;
+    background-color: #1e293b !important;
+    border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  }
+  .proseContent blockquote {
+    color: #ffffff !important;
+    border-left-color: #3b82f6 !important;
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    padding: 1.5rem !important;
+    border-radius: 0 0.75rem 0.75rem 0 !important;
+  }
+  .proseContent blockquote p {
+    color: #ffffff !important;
+  }
+  .proseContent hr {
+    border-color: #334155 !important;
+  }
+  .proseContent ul li::marker {
+    color: #3b82f6 !important;
+  }
+  .proseContent ol li::marker {
+    color: #3b82f6 !important;
+  }
+}
+
 :global(.dark) .proseContent {
-  color: #d1d5db;
+  color: #ffffff !important;
 }
-
+:global(.dark) .proseContent p,
+:global(.dark) .proseContent li,
+:global(.dark) .proseContent div,
+:global(.dark) .proseContent span {
+  color: #ffffff !important;
+}
 :global(.dark) .proseContent a {
-  color: #60a5fa;
+  color: #60a5fa !important;
+  text-decoration: underline !important;
 }
-
 :global(.dark) .proseContent strong,
 :global(.dark) .proseContent h1,
 :global(.dark) .proseContent h2,
 :global(.dark) .proseContent h3,
 :global(.dark) .proseContent h4 {
-  color: #f9fafb;
+  color: #ffffff !important;
 }
-
 :global(.dark) .proseContent code {
-  color: #f9fafb;
-  background-color: #374151;
+  color: #38bdf8 !important;
+  background-color: #1e293b !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
 }
-
 :global(.dark) .proseContent blockquote {
-  color: #f9fafb;
-  border-left-color: #374151;
+  color: #ffffff !important;
+  border-left-color: #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  padding: 1.5rem !important;
+  border-radius: 0 0.75rem 0.75rem 0 !important;
 }
-
+:global(.dark) .proseContent blockquote p {
+  color: #ffffff !important;
+}
 :global(.dark) .proseContent hr {
-  border-color: #374151;
+  border-color: #334155 !important;
+}
+:global(.dark) .proseContent ul li::marker {
+  color: #3b82f6 !important;
+}
+:global(.dark) .proseContent ol li::marker {
+  color: #3b82f6 !important;
 }

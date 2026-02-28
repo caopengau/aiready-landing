@@ -139,7 +139,7 @@ export function BlogPostClient({
           </header>
 
           {/* Content */}
-          <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-zinc-800 p-8 md:p-12 overflow-hidden">
+          <div className="bg-white dark:bg-zinc-900/50 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-zinc-800 p-8 md:p-12 overflow-hidden">
             <section className={styles.proseContent}>{content}</section>
           </div>
 
