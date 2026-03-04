@@ -91,6 +91,8 @@ export default async function DashboardPage() {
         name: user.name,
         email: user.email,
         image: user.image,
+        githubId: user.githubId,
+        googleId: user.googleId,
       }}
       repos={reposWithAnalysis}
       teams={teams}
