@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import PlatformShell from '@/components/PlatformShell';
 import { AlertCircleIcon } from '@/components/Icons';
 import type { Repository, Team, TeamMember } from '@/lib/db';
@@ -39,6 +40,7 @@ function RepoDetailContent({ repo, user, teams, overallScore }: Props) {
     severity?: string;
   }>({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [showMethodology, setShowMethodology] = useState(false);
   const ITEMS_PER_PAGE = 25;
 
   const toggleIssue = (index: number) => {
@@ -233,21 +235,62 @@ function RepoDetailContent({ repo, user, teams, overallScore }: Props) {
             <div className="space-y-8">
               {/* Methodology Panel for selected tool */}
               {selectedMetric && (
-                <div className="glass-card rounded-3xl p-8 border border-cyan-500/20 bg-cyan-500/5 shadow-2xl shadow-cyan-500/5">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 rounded-2xl bg-slate-800 border border-slate-700 shadow-inner">
-                      {selectedMetric.icon}
+                <div className="glass-card rounded-3xl overflow-hidden border border-cyan-500/20 bg-cyan-500/5 shadow-2xl shadow-cyan-500/5">
+                  <div
+                    className="p-8 flex items-center justify-between cursor-pointer hover:bg-cyan-500/10 transition-colors"
+                    onClick={() => setShowMethodology(!showMethodology)}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 rounded-2xl bg-slate-800 border border-slate-700 shadow-inner">
+                        {selectedMetric.icon}
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-white">
+                          {selectedMetric.name} Methodology
+                        </h3>
+                        <p className="text-slate-400 text-sm">
+                          {selectedMetric.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white">
-                        {selectedMetric.name} Methodology
-                      </h3>
-                      <p className="text-slate-400 text-sm">
-                        {selectedMetric.description}
-                      </p>
+                    <div className="flex items-center gap-3">
+                      <span className="text-cyan-500 text-[10px] font-black uppercase tracking-widest bg-cyan-500/10 px-3 py-1.5 rounded-full border border-cyan-500/20">
+                        {showMethodology ? 'Hide Details' : 'Deep Dive'}
+                      </span>
+                      <motion.div
+                        animate={{ rotate: showMethodology ? 180 : 0 }}
+                        className="text-cyan-500"
+                      >
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      </motion.div>
                     </div>
                   </div>
-                  <MethodologyPanel metric={selectedMetric} />
+                  <AnimatePresence>
+                    {showMethodology && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden border-t border-cyan-500/10"
+                      >
+                        <div className="p-8">
+                          <MethodologyPanel metric={selectedMetric} />
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               )}
 
