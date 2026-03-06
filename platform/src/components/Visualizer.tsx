@@ -17,6 +17,12 @@ export default function Visualizer({ data, filters, onToggleFilter }: Props) {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Count edges by type from the (already-filtered) graph data
+  const edgeCounts = data.edges.reduce<Record<string, number>>((acc, e) => {
+    acc[e.type] = (acc[e.type] || 0) + 1;
+    return acc;
+  }, {});
+
   useEffect(() => {
     if (!containerRef.current) return;
     const observer = new ResizeObserver((entries) => {
@@ -100,24 +106,59 @@ export default function Visualizer({ data, filters, onToggleFilter }: Props) {
             Connection Types
           </h4>
           <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-0.5 bg-cyan-400 opacity-80" />
-              <span className="text-[11px] font-bold text-slate-400">
-                Dependency
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-1 bg-amber-400 opacity-90" />
-              <span className="text-[11px] font-bold text-slate-400">
-                Similarity
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-0.5 border-t-2 border-dashed border-blue-400 opacity-80" />
-              <span className="text-[11px] font-bold text-slate-400">
-                Reference
-              </span>
-            </div>
+            {(
+              [
+                {
+                  type: 'dependency',
+                  label: 'Dependency',
+                  lineClass: 'w-6 h-0.5 bg-cyan-400',
+                  dashed: false,
+                },
+                {
+                  type: 'similarity',
+                  label: 'Similarity',
+                  lineClass: 'w-6 h-1 bg-amber-400',
+                  dashed: false,
+                },
+                {
+                  type: 'structural',
+                  label: 'Structural',
+                  lineClass: 'w-6 h-0.5 bg-indigo-400',
+                  dashed: false,
+                },
+                {
+                  type: 'reference',
+                  label: 'Reference',
+                  lineClass:
+                    'w-6 h-0.5 border-t-2 border-dashed border-blue-400',
+                  dashed: true,
+                },
+              ] as const
+            ).map(({ type, label, lineClass, dashed }) => {
+              const count = edgeCounts[type] || 0;
+              const active = count > 0;
+              return (
+                <div
+                  key={type}
+                  className={`flex items-center gap-3 transition-opacity duration-200 ${active ? 'opacity-100' : 'opacity-25 grayscale'}`}
+                  title={
+                    active
+                      ? `${count} ${label.toLowerCase()} links`
+                      : `No ${label.toLowerCase()} links in current view`
+                  }
+                >
+                  <div className={lineClass} />
+                  <span className="text-[11px] font-bold text-slate-400 flex-1">
+                    {label}
+                  </span>
+                  {active && (
+                    <span className="text-[9px] font-mono text-slate-600">
+                      {count}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
