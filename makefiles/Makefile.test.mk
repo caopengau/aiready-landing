@@ -72,20 +72,20 @@ test-verify-cli: ## Run a smoke scan and verify CLI output
 
 test-landing-e2e: ## Run E2E tests for landing page
 	@$(call log_step,Running landing page E2E tests...)
-	@cd landing && $(PNPM) exec playwright test --reporter=list
+	@cd landing && CI=1 $(PNPM) exec playwright test --reporter=list
 	@$(call log_success,Landing page E2E tests passed)
 
 test-landing-e2e-local: ## Run landing E2E tests against local dev server
 	@$(call log_step,Running landing E2E tests against local dev server...)
-	@cd landing && $(PNPM) exec playwright test --reporter=list
+	@cd landing && CI=1 $(PNPM) exec playwright test --reporter=list
 	@$(call log_success,Landing local E2E tests passed)
 
 test-platform-e2e: ## Run Playwright E2E tests for platform against dev endpoint
 	@$(call log_step,Running platform E2E tests against https://dev.platform.getaiready.dev...)
-	@cd platform && PLAYWRIGHT_TEST_BASE_URL=https://dev.platform.getaiready.dev $(PNPM) test:e2e
+	@cd platform && CI=1 PLAYWRIGHT_TEST_BASE_URL=https://dev.platform.getaiready.dev $(PNPM) test:e2e
 	@$(call log_success,Platform E2E tests passed)
 
 test-platform-e2e-local: ## Run platform E2E tests against local dev server
 	@$(call log_step,Running platform E2E tests against local server...)
-	@cd platform && $(PNPM) test:e2e
+	@cd platform && CI=1 $(PNPM) test:e2e
 	@$(call log_success,Platform local E2E tests passed)

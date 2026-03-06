@@ -169,26 +169,26 @@ release-platform: ## Release platform: TYPE=patch|minor|major
 		$(call log_error,Invalid TYPE '$(TYPE)'. Expected patch|minor|major); \
 		exit 1; \
 	fi; \
-	$(MAKE) -C $(ROOT_DIR) $$bump_target; \
-	$(call log_success,Version bump complete for @aiready/platform); \
-	$(call commit_and_tag_platform); \
-	$(call log_step,Running platform tests before release...); \
-	$(MAKE) -C $(ROOT_DIR) test-platform || exit 1; \
-	$(MAKE) -C $(ROOT_DIR) test-platform-e2e-local || exit 1; \
-	$(call log_step,Building and deploying platform to production...); \
-	$(MAKE) -C $(ROOT_DIR) deploy-platform-prod || { \
+	@$(MAKE) -C $(ROOT_DIR) $$bump_target; \
+	@$(call log_success,Version bump complete for @aiready/platform); \
+	@$(call commit_and_tag_platform); \
+	@$(call log_step,Running platform tests before release...); \
+	@CI=1 $(MAKE) -C $(ROOT_DIR) test-platform || exit 1; \
+	@CI=1 $(MAKE) -C $(ROOT_DIR) test-platform-e2e-local || exit 1; \
+	@$(call log_step,Building and deploying platform to production...); \
+	@$(MAKE) -C $(ROOT_DIR) deploy-platform-prod || { \
 		$(call log_error,Production deployment failed. Aborting release.); \
 		$(call log_warning,Version was bumped and tagged locally. Run 'git reset --hard HEAD~1 && git tag -d platform-v'$$(node -p "require('$(PLATFORM_DIR)/package.json').version") to undo.); \
 		exit 1; \
 	}; \
-	$(call log_success,Platform production deployment complete); \
-	$(call log_step,Verifying deployment...); \
-	$(MAKE) -C $(ROOT_DIR) platform-verify || { \
+	@$(call log_success,Platform production deployment complete); \
+	@$(call log_step,Verifying deployment...); \
+	@$(MAKE) -C $(ROOT_DIR) platform-verify || { \
 		$(call log_warning,Deployment verification failed - platform may still be deploying); \
 	}; \
-	$(call log_step,Pushing monorepo branch and tags...); \
-	cd $(ROOT_DIR) && git push origin $(TARGET_BRANCH) --follow-tags; \
-	$(call log_success,Release finished for @aiready/platform)
+	@$(call log_step,Pushing monorepo branch and tags...); \
+	@cd $(ROOT_DIR) && git push origin $(TARGET_BRANCH) --follow-tags; \
+	@$(call log_success,Release finished for @aiready/platform)
 
 ##@ Package Release
 
