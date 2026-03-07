@@ -93,6 +93,13 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  const hasChanges = useMemo(() => {
+    return (
+      JSON.stringify(settings) !==
+      JSON.stringify(initialSettings || defaultSettings)
+    );
+  }, [settings, initialSettings, defaultSettings]);
+
   const handleToggleTool = (tool: string) => {
     const tools = settings.scan?.tools || [];
     const newTools = tools.includes(tool)
@@ -106,6 +113,7 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
   };
 
   const handleSave = async () => {
+    if (!hasChanges) return;
     setSaving(true);
     try {
       await onSave(settings);
@@ -196,11 +204,15 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
           <div className="group relative">
             <label className="block text-sm font-bold text-slate-400 mb-2 flex items-center gap-2">
               Excluded Patterns (Glob)
-              <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
-              <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-10 shadow-2xl">
-                Comma-separated glob patterns. Files matching these will be
-                ignored during analysis to save context and focus on your core
-                logic.
+              <div className="group relative">
+                <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-50 shadow-2xl">
+                  <p className="font-bold text-cyan-400 mb-1">
+                    Scope Optimization
+                  </p>
+                  Exclude tests, build artifacts, or vendor code to save context
+                  window and focus analysis on core business logic.
+                </div>
               </div>
             </label>
             <textarea
@@ -280,7 +292,16 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                 <label className="block text-sm font-bold text-slate-400 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     Min Similarity
-                    <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                    <div className="group relative">
+                      <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                      <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-50 shadow-2xl">
+                        <p className="font-bold text-amber-400 mb-1">
+                          Cloning Strictness
+                        </p>
+                        Lower values find more subtle duplicates. Higher values
+                        focus on near-identical "copy-paste" code clones.
+                      </div>
+                    </div>
                   </span>
                   <span className="text-amber-500">
                     {Math.round(
@@ -318,7 +339,17 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                 <label className="block text-sm font-bold text-slate-400 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     Min Lines
-                    <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                    <div className="group relative">
+                      <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                      <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-50 shadow-2xl">
+                        <p className="font-bold text-amber-400 mb-1">
+                          Noise Filtering
+                        </p>
+                        Minimum length of a code block to be considered for
+                        duplication. Increase this to ignore boilerplate
+                        snippets.
+                      </div>
+                    </div>
                   </span>
                   <span className="text-amber-500">
                     {settings.tools?.[ToolName.PatternDetect]?.minLines || 5}{' '}
@@ -361,7 +392,16 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                 <label className="block text-sm font-bold text-slate-400 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     Max Context Depth
-                    <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                    <div className="group relative">
+                      <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                      <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-50 shadow-2xl">
+                        <p className="font-bold text-cyan-400 mb-1">
+                          Dependency Horizon
+                        </p>
+                        How deep to follow import chains. Higher depth captures
+                        transitive complexity but increases context consumption.
+                      </div>
+                    </div>
                   </span>
                   <span className="text-amber-500">
                     {settings.tools?.[ToolName.ContextAnalyzer]?.maxDepth || 5}{' '}
@@ -395,7 +435,16 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                 <label className="block text-sm font-bold text-slate-400 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     Min Cohesion Score
-                    <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                    <div className="group relative">
+                      <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                      <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-50 shadow-2xl">
+                        <p className="font-bold text-cyan-400 mb-1">
+                          Architectural Health
+                        </p>
+                        Files below this target score are flagged as "God
+                        Objects" or fragmented logic needing modularization.
+                      </div>
+                    </div>
                   </span>
                   <span className="text-amber-500">
                     {Math.round(
@@ -439,15 +488,36 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[
-                { id: 'checkMagicLiterals', label: 'Magic Literals' },
-                { id: 'checkBooleanTraps', label: 'Boolean Traps' },
-                { id: 'checkAmbiguousNames', label: 'Ambiguous Names' },
+                {
+                  id: 'checkMagicLiterals',
+                  label: 'Magic Literals',
+                  tip: 'Detects hardcoded values that lack semantic context for AI models.',
+                },
+                {
+                  id: 'checkBooleanTraps',
+                  label: 'Boolean Traps',
+                  tip: 'Identifies positional booleans that are ambiguous without parameter names.',
+                },
+                {
+                  id: 'checkAmbiguousNames',
+                  label: 'Ambiguous Names',
+                  tip: 'Flags variables like "data" or "item" that provide no reasoning signal.',
+                },
                 {
                   id: 'checkUndocumentedExports',
                   label: 'Undocumented Exports',
+                  tip: 'Ensures public APIs have JSDoc/Docstrings for agent grounding.',
                 },
-                { id: 'checkImplicitSideEffects', label: 'Side Effects' },
-                { id: 'checkDeepCallbacks', label: 'Deep Callbacks' },
+                {
+                  id: 'checkImplicitSideEffects',
+                  label: 'Side Effects',
+                  tip: 'Detects functions that modify global state, confusing agentic logic.',
+                },
+                {
+                  id: 'checkDeepCallbacks',
+                  label: 'Deep Callbacks',
+                  tip: 'Flags nested callbacks that create complex reasoning paths for LLMs.',
+                },
               ].map((check) => (
                 <div
                   key={check.id}
@@ -467,7 +537,7 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                       },
                     });
                   }}
-                  className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                  className={`group relative p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
                     settings.tools?.[ToolName.AiSignalClarity]?.[
                       check.id as keyof any
                     ] !== false
@@ -487,6 +557,9 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                         : 'bg-slate-800'
                     }`}
                   />
+                  <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-48 p-3 bg-slate-900 border border-slate-800 rounded-xl text-[10px] text-slate-400 z-50 shadow-2xl normal-case">
+                    {check.tip}
+                  </div>
                 </div>
               ))}
             </div>
@@ -502,7 +575,17 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                 <label className="block text-sm font-bold text-slate-400 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     Max Recommended Depth
-                    <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                    <div className="group relative">
+                      <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                      <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-50 shadow-2xl">
+                        <p className="font-bold text-amber-400 mb-1">
+                          Reasoning Complexity
+                        </p>
+                        Deeply nested logic is significantly harder for AI
+                        agents to reason about accurately. Targets flatter
+                        architectures.
+                      </div>
+                    </div>
                   </span>
                   <span className="text-amber-500">
                     {settings.tools?.[ToolName.AgentGrounding]
@@ -538,7 +621,17 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
                 <label className="block text-sm font-bold text-slate-400 flex items-center justify-between">
                   <span className="flex items-center gap-2">
                     Doc Drift Stale Months
-                    <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                    <div className="group relative">
+                      <InfoIcon className="w-4 h-4 text-slate-600 cursor-help" />
+                      <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block w-64 p-3 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400 z-50 shadow-2xl">
+                        <p className="font-bold text-amber-400 mb-1">
+                          Information Freshness
+                        </p>
+                        Documentation older than this threshold is compared
+                        against recent code changes to detect hallucination
+                        risks.
+                      </div>
+                    </div>
                   </span>
                   <span className="text-amber-500">
                     {settings.tools?.[ToolName.DocDrift]?.staleMonths || 6}{' '}
@@ -575,16 +668,20 @@ export function ScanConfigForm({ repoId, initialSettings, onSave }: Props) {
         <div className="flex items-center gap-4 text-slate-500 text-xs">
           <ChartIcon className="w-4 h-4" />
           <p>
-            These settings will be applied to the next scan of this repository.
+            {hasChanges
+              ? 'You have unsaved changes to your scan strategy.'
+              : 'These settings will be applied to the next scan of this repository.'}
           </p>
         </div>
         <button
           onClick={handleSave}
-          disabled={saving}
+          disabled={saving || !hasChanges}
           className={`flex items-center gap-3 px-8 py-4 rounded-2xl font-bold transition-all shadow-xl ${
             success
               ? 'bg-green-500 text-white shadow-green-500/20'
-              : 'bg-cyan-500 text-black hover:bg-cyan-400 shadow-cyan-500/20 active:scale-95'
+              : !hasChanges
+                ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                : 'bg-cyan-500 text-black hover:bg-cyan-400 shadow-cyan-500/20 active:scale-95'
           } disabled:opacity-50`}
         >
           {saving ? (
