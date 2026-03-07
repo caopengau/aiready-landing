@@ -133,23 +133,6 @@ export default function SettingsClient({ user, teams, overallScore }: Props) {
           <IntegrationsSection user={user} />
         </section>
 
-        <section className="space-y-6">
-          <div className="flex flex-col gap-2">
-            <h2 className="text-2xl font-black tracking-tight text-white">
-              Default Scan Strategy
-            </h2>
-            <p className="text-slate-400 text-sm">
-              These settings will auto-apply to every repository you scan,
-              unless specifically overridden at the repository level.
-            </p>
-          </div>
-          <ScanConfigForm
-            repoId="global"
-            initialSettings={user.scanConfig || null}
-            onSave={handleUpdateScanStrategy}
-          />
-        </section>
-
         <ApiAccessSection
           apiKeys={apiKeys}
           newKeyName={newKeyName}
