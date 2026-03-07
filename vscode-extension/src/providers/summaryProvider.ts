@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { getScoreColor, createBarChart } from '../utils/visual';
 
 export interface Summary {
   score: number;
@@ -47,23 +48,10 @@ export class AIReadySummaryProvider implements vscode.TreeDataProvider<vscode.Tr
     return element;
   }
 
-  private getScoreColor(score: number): string {
-    if (score >= 70) return '#4caf50'; // green
-    if (score >= 50) return '#ff9800'; // orange
-    return '#f44336'; // red
-  }
-
   private getScoreIcon(score: number): string {
     if (score >= 70) return 'check';
     if (score >= 50) return 'warning';
     return 'error';
-  }
-
-  private createBarChart(score: number, width: number = 20): string {
-    const filled = Math.round((score / 100) * width);
-    const empty = width - filled;
-    const color = this.getScoreColor(score);
-    return `█`.repeat(filled) + `░`.repeat(empty);
   }
 
   private createScoreGauge(score: number): string {
@@ -125,7 +113,7 @@ export class AIReadySummaryProvider implements vscode.TreeDataProvider<vscode.Tr
       } as vscode.TreeItem);
 
       // Visual bar
-      const bar = this.createBarChart(this.summary.score, 15);
+      const bar = createBarChart(this.summary.score, 15);
       items.push({
         label: `${bar} ${this.summary.score}%`,
         iconPath: new vscode.ThemeIcon('horizontal-line'),
@@ -165,7 +153,7 @@ export class AIReadySummaryProvider implements vscode.TreeDataProvider<vscode.Tr
       // Add tool breakdown with bars
       if (this.summary.breakdown && this.summary.breakdown.length > 0) {
         this.summary.breakdown.forEach((tool) => {
-          const bar = this.createBarChart(tool.score, 12);
+          const bar = createBarChart(tool.score, 12);
           items.push({
             label: `${bar} ${tool.score}`,
             iconPath: new vscode.ThemeIcon(
@@ -206,7 +194,7 @@ export class AIReadySummaryProvider implements vscode.TreeDataProvider<vscode.Tr
 
         // Token Efficiency
         if (this.summary.tokenBudget) {
-          const efficiencyBar = this.createBarChart(
+          const efficiencyBar = createBarChart(
             this.summary.tokenBudget.efficiencyRatio * 100,
             10
           );
@@ -279,7 +267,7 @@ export class AIReadySummaryProvider implements vscode.TreeDataProvider<vscode.Tr
 
       // Add action buttons
       items.push({
-        label: '',
+        label: ' ',
         contextValue: 'separator',
       } as vscode.TreeItem);
       items.push({

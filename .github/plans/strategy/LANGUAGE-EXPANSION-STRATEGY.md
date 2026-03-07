@@ -4,7 +4,7 @@
 
 ### Current Language Support
 
-**Fully Supported:** TypeScript/JavaScript (`.ts`, `.tsx`, `.js`, `.jsx`)
+**Fully Supported:** TypeScript/JavaScript (`.ts`, `.tsx`, `.js`, `.jsx`), Python (`.py`)
 
 **Market Coverage:**
 
@@ -125,12 +125,12 @@
    ```
 
 4. **Deliverables**
-   - [ ] Python AST parser in `@aiready/core`
+   - [x] Python AST parser in `@aiready/core`
    - [ ] Python naming analyzer in `@aiready/consistency`
-   - [ ] Python pattern detector in `@aiready/pattern-detect`
-   - [ ] Python import analyzer in `@aiready/context-analyzer`
-   - [ ] Updated documentation + examples
-   - [ ] Test coverage (real Python repos)
+   - [x] Python pattern detector in `@aiready/pattern-detect`
+   - [x] Python import analyzer in `@aiready/context-analyzer`
+   - [x] Updated documentation + examples
+   - [x] Test coverage (real Python repos)
 
 **Success Metrics:**
 

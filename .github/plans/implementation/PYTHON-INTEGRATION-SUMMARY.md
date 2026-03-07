@@ -113,9 +113,9 @@ aiready analyze myproject --tools consistency,patterns
 
 ### Parser Implementation
 
-- **Type**: Regex-based (tree-sitter planned for Phase 2)
-- **Performance**: ~10ms per file
-- **Coverage**: Functions, classes, imports, exports
+- **Type**: Tree-sitter based (AST)
+- **Performance**: ~15ms per file (includes initialization)
+- **Coverage**: Functions, classes, imports, exports (module-level)
 - **Naming**: PEP 8 conventions (snake_case, PascalCase, UPPER_CASE)
 
 ### Import Resolution
@@ -185,4 +185,4 @@ aiready analyze packages/core/examples/python-demo
 **Status**: ✅ Phase 1 Complete  
 **Build**: ✅ All packages building  
 **Market**: 64% coverage (TypeScript, JavaScript, Python)  
-**Date**: January 2025
+**Date**: March 2026

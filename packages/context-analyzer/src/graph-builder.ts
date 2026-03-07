@@ -89,7 +89,7 @@ export function buildDependencyGraph(
     options?.domainKeywords ?? extractDomainKeywordsFromPaths(files);
 
   for (const { file, content } of files) {
-    const imports = extractImportsFromContent(content);
+    const imports = extractImportsFromContent(content, file);
     const exports = extractExportsWithAST(
       content,
       file,
@@ -132,22 +132,48 @@ export function buildDependencyGraph(
 }
 
 /**
- * Extract imports from file content using regex
+ * Extract imports from file content
  */
-export function extractImportsFromContent(content: string): string[] {
+export function extractImportsFromContent(
+  content: string,
+  filePath?: string
+): string[] {
   const imports: string[] = [];
-  const patterns = [
-    /import\s+.*?\s+from\s+['"](.+?)['"]/g,
-    /import\s+['"](.+?)['"]/g,
-    /require\(['"](.+?)['"]\)/g,
-  ];
+  const isPython = filePath?.toLowerCase().endsWith('.py');
 
-  for (const pattern of patterns) {
-    let match;
-    while ((match = pattern.exec(content)) !== null) {
-      const importPath = match[1];
-      if (importPath && !importPath.startsWith('node:')) {
-        imports.push(importPath);
+  if (isPython) {
+    const pythonPatterns = [
+      /^\s*import\s+([a-zA-Z0-9_., ]+)/gm,
+      /^\s*from\s+([a-zA-Z0-9_.]+)\s+import/gm,
+    ];
+
+    for (const pattern of pythonPatterns) {
+      let match;
+      while ((match = pattern.exec(content)) !== null) {
+        const importPath = match[1];
+        if (importPath) {
+          // Handle multiple imports in one line: import os, sys
+          const parts = importPath
+            .split(',')
+            .map((p) => p.trim().split(/\s+as\s+/)[0]);
+          imports.push(...parts);
+        }
+      }
+    }
+  } else {
+    const patterns = [
+      /import\s+.*?\s+from\s+['"](.+?)['"]/g,
+      /import\s+['"](.+?)['"]/g,
+      /require\(['"](.+?)['"]\)/g,
+    ];
+
+    for (const pattern of patterns) {
+      let match;
+      while ((match = pattern.exec(content)) !== null) {
+        const importPath = match[1];
+        if (importPath && !importPath.startsWith('node:')) {
+          imports.push(importPath);
+        }
       }
     }
   }

@@ -6,6 +6,7 @@ import {
   GLOBAL_SCAN_OPTIONS,
   GLOBAL_INFRA_OPTIONS,
   COMMON_FINE_TUNING_OPTIONS,
+  initializeParsers,
 } from '@aiready/core';
 import type {
   AnalysisResult,
@@ -137,6 +138,9 @@ function sanitizeToolConfig(config: any): any {
 export async function analyzeUnified(
   options: UnifiedAnalysisOptions
 ): Promise<UnifiedAnalysisResult> {
+  // Initialize language parsers
+  await initializeParsers();
+
   const startTime = Date.now();
   const requestedTools = options.tools || [
     'patterns',
