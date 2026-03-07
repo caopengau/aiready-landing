@@ -53,21 +53,48 @@ export async function analyzeChangeAmplification(
       const parseResult = parser.parse(content, file);
       const dependencies = parseResult.imports.map((i) => i.source);
 
+      const extensions = ['.ts', '.tsx', '.js', '.jsx'];
       for (const dep of dependencies) {
-        // Resolve simple relative or absolute imports for the graph
-        // This is a simplified resolution for demonstration purposes
         const depDir = path.dirname(file);
+        let resolvedPath: string | undefined;
 
-        // Find if this dependency resolves to one of our mapped files
-        const resolvedPath = files.find((f) => {
-          if (dep.startsWith('.')) {
-            return f.startsWith(path.resolve(depDir, dep));
-          } else {
-            return f.includes(dep);
+        if (dep.startsWith('.')) {
+          // Relative import resolution
+          const absoluteDepBase = path.resolve(depDir, dep);
+
+          // Try extensions
+          for (const ext of extensions) {
+            const withExt = absoluteDepBase + ext;
+            if (files.includes(withExt)) {
+              resolvedPath = withExt;
+              break;
+            }
           }
-        });
 
-        if (resolvedPath) {
+          // Try /index variations
+          if (!resolvedPath) {
+            for (const ext of extensions) {
+              const withIndex = path.join(absoluteDepBase, `index${ext}`);
+              if (files.includes(withIndex)) {
+                resolvedPath = withIndex;
+                break;
+              }
+            }
+          }
+        } else {
+          // Non-relative import (package or absolute)
+          // Exact match or matches a file in our set (normalized)
+          const depWithoutExt = dep.replace(/\.(ts|tsx|js|jsx)$/, '');
+          resolvedPath = files.find((f) => {
+            const fWithoutExt = f.replace(/\.(ts|tsx|js|jsx)$/, '');
+            return (
+              fWithoutExt === depWithoutExt ||
+              fWithoutExt.endsWith(`/${depWithoutExt}`)
+            );
+          });
+        }
+
+        if (resolvedPath && resolvedPath !== file) {
           dependencyGraph.get(file)?.push(resolvedPath);
           reverseGraph.get(resolvedPath)?.push(file);
         }

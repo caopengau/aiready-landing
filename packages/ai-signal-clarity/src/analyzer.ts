@@ -3,7 +3,12 @@
  * Scans all TS/JS files in a directory and aggregates signals.
  */
 
-import { scanFiles, calculateAiSignalClarity, Severity } from '@aiready/core';
+import {
+  scanFiles,
+  calculateAiSignalClarity,
+  Severity,
+  emitProgress,
+} from '@aiready/core';
 import { scanFile } from './scanner';
 import type {
   AiSignalClarityOptions,
@@ -34,10 +39,12 @@ export async function analyzeAiSignalClarity(
   let processed = 0;
   for (const filePath of files) {
     processed++;
-    options.onProgress?.(
+    emitProgress(
       processed,
       files.length,
-      `ai-signal-clarity: analyzing files`
+      'ai-signal-clarity',
+      'analyzing files',
+      options.onProgress
     );
 
     const result = scanFile(filePath, options);

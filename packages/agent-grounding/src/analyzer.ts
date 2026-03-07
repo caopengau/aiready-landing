@@ -15,6 +15,7 @@ import {
   VAGUE_FILE_NAMES,
   Severity,
   IssueType,
+  emitProgress,
 } from '@aiready/core';
 import { readFileSync, existsSync, statSync } from 'fs';
 import { join, extname, basename, relative } from 'path';
@@ -204,10 +205,12 @@ export async function analyzeAgentGrounding(
   let processed = 0;
   for (const f of files) {
     processed++;
-    options.onProgress?.(
+    emitProgress(
       processed,
       files.length,
-      `agent-grounding: analyzing files`
+      'agent-grounding',
+      'analyzing files',
+      options.onProgress
     );
 
     const analysis = analyzeFile(f);
