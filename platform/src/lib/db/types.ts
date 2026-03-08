@@ -149,3 +149,19 @@ export interface ApiKey {
   createdAt: string;
   lastUsedAt?: string;
 }
+
+export interface RuleOverride {
+  threshold?: number;
+  weight?: number;
+  enabled?: boolean;
+}
+
+export interface CustomRuleset {
+  id: string; // SK: RULESET#DEFAULT
+  teamId: string; // PK: ORG#<teamId>
+  overrides: Record<string, RuleOverride>;
+  customPolicies?: string[];
+  enforcement: 'strict' | 'advisory';
+  createdAt: string;
+  updatedAt: string;
+}

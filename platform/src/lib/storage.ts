@@ -204,12 +204,18 @@ export async function getAnalysisDownloadUrl(
 /**
  * Calculate AI Readiness Score from analysis data
  */
-export function calculateAiScore(data: Partial<AnalysisData>): number {
+export function calculateAiScore(
+  data: Partial<AnalysisData>,
+  overrides?: Record<
+    string,
+    { threshold?: number; weight?: number; enabled?: boolean }
+  >
+): number {
   // Use scores from breakdown directly
   const b = data.breakdown || {};
 
   // Weights matching packages/core/src/scoring.ts
-  const weights: Record<string, number> = {
+  const defaultWeights: Record<string, number> = {
     [ToolName.PatternDetect]: 22,
     [ToolName.ContextAnalyzer]: 19,
     [ToolName.NamingConsistency]: 14,
@@ -228,11 +234,18 @@ export function calculateAiScore(data: Partial<AnalysisData>): number {
   let weightedSum = 0;
   let totalWeight = 0;
 
-  for (const [key, weight] of Object.entries(weights)) {
+  for (const [key, defaultWeight] of Object.entries(defaultWeights)) {
+    const override = overrides?.[key];
+    const weight =
+      override?.weight !== undefined ? override.weight : defaultWeight;
+    const enabled = override?.enabled !== false;
+
+    if (!enabled) continue;
+
     const val = (b as any)[key];
     const score = typeof val === 'number' ? val : (val as any)?.score;
 
-    if (typeof score === 'number' && score > 0) {
+    if (typeof score === 'number' && score >= 0) {
       weightedSum += score * weight;
       totalWeight += weight;
     }
@@ -304,7 +317,11 @@ function cleanPath(filePath: string, rootDir?: string): string {
 export function normalizeReport(
   raw: any,
   force = false,
-  rootDir?: string
+  rootDir?: string,
+  overrides?: Record<
+    string,
+    { threshold?: number; weight?: number; enabled?: boolean }
+  >
 ): AnalysisData {
   // If it's already in the target format AND has breakdown details, and we are not forcing, return as is.
   if (
@@ -501,7 +518,7 @@ export function normalizeReport(
   // Calculate overall score if missing or zero
   let aiReadinessScore = scoring.overall || 0;
   if (aiReadinessScore === 0) {
-    aiReadinessScore = calculateAiScore({ breakdown });
+    aiReadinessScore = calculateAiScore({ breakdown }, overrides);
   }
 
   return {

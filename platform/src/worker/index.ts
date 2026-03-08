@@ -179,7 +179,11 @@ export async function handler(event: SQSEvent) {
       // Final fallback to Recommended Defaults
       if (!scanConfig) {
         console.log(`[ScanWorker] Using platform-wide recommended defaults.`);
-        scanConfig = recommendedDefaults;
+        scanConfig = recommendedDefaults as any;
+      }
+
+      if (!scanConfig) {
+        throw new Error('[ScanWorker] Failed to resolve scan configuration');
       }
 
       const analysisResults = await analyzeUnified({
@@ -206,7 +210,19 @@ export async function handler(event: SQSEvent) {
 
       console.log(`[ScanWorker] Analysis complete. Normalizing results...`);
 
-      const data = normalizeReport(results, false, tempDir);
+      // Fetch Custom Ruleset overrides if repo belongs to a team
+      let ruleset = null;
+      if (repo.teamId) {
+        const { getRuleset } = await import('../lib/db/rulesets');
+        ruleset = await getRuleset(repo.teamId);
+        if (ruleset) {
+          console.log(
+            `[ScanWorker] Applying custom ruleset overrides for team ${repo.teamId}`
+          );
+        }
+      }
+
+      const data = normalizeReport(results, false, tempDir, ruleset?.overrides);
       const timestamp = new Date().toISOString();
       const analysisId = randomUUID();
 

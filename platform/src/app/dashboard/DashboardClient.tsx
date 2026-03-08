@@ -4,6 +4,7 @@ import { useState } from 'react';
 import PlatformShell from '@/components/PlatformShell';
 import type { Repository, Analysis, Team, TeamMember } from '@/lib/db';
 import { TeamManagement } from './components/TeamManagement';
+import { RulesetSettings } from './components/RulesetSettings';
 import { AddRepoModal } from './components/AddRepoModal';
 import { WelcomeHeader } from './components/WelcomeHeader';
 import { LimitsBanner } from './components/LimitsBanner';
@@ -163,12 +164,16 @@ export default function DashboardClient({
         )}
 
         {currentTeamId !== 'personal' && (
-          <TeamManagement
-            teamId={currentTeamId}
-            teamName={
-              teams.find((t) => t.teamId === currentTeamId)?.team.name || 'Team'
-            }
-          />
+          <div className="space-y-8">
+            <TeamManagement
+              teamId={currentTeamId}
+              teamName={
+                teams.find((t) => t.teamId === currentTeamId)?.team.name ||
+                'Team'
+              }
+            />
+            <RulesetSettings teamId={currentTeamId} />
+          </div>
         )}
       </div>
 
