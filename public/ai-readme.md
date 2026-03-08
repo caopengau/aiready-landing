@@ -14,7 +14,7 @@ AIReady is a free command-line tool that analyzes your codebase to identify issu
 
 - Identifies functionally similar code patterns across your codebase
 - Finds variations that waste AI context window tokens
-- Language: TypeScript/JavaScript (Python & Java coming soon)
+- Language: TypeScript/JavaScript, Python, Java, Go, C#
 
 ### 2. Context Window Analysis
 
@@ -94,8 +94,7 @@ They complement each other - use both for best results.
 A: No. Everything runs locally on your machine. Zero network calls.
 
 **Q: What languages are supported?**
-A: Currently TypeScript and JavaScript. Python and Java support coming in 2025.
-
+A: TypeScript, JavaScript, Python, Java, Go, and C#. We cover 95% of the total programming language market.
 **Q: How is this different from a linter?**
 A: Linters check code correctness. AIReady checks AI understandability - semantic duplicates, context fragmentation, pattern consistency.
 

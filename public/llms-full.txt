@@ -274,10 +274,10 @@ AIReady is built with privacy and security as core principles:
 **Currently Supported**:
 - TypeScript
 - JavaScript (ES6+)
-
-**Coming in 2025**:
 - Python
 - Java
+- Go
+- C#
 
 **Parser**: Uses language-specific AST parsers for semantic analysis
 
@@ -390,7 +390,7 @@ Create `.aiready.json` in your project root:
 A: No. Everything runs locally on your machine. Zero network calls. 100% offline.
 
 **Q: What languages are supported?**
-A: Currently TypeScript and JavaScript. Python and Java support coming in 2025.
+A: TypeScript, JavaScript, Python, Java, Go, and C#.
 
 **Q: How is this different from a linter?**
 A: Linters check code correctness. AIReady checks AI understandability - semantic duplicates, context fragmentation, pattern consistency.

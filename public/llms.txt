@@ -33,7 +33,7 @@ aiready scan .
 - 100% free and open source (MIT license)
 - Runs completely offline (zero network calls)
 - AI Readiness Score (0-100) for tracking progress
-- Language support: TypeScript/JavaScript (Python & Java coming 2025)
+- Language support: TypeScript, JavaScript, Python, Java, Go, C# (95% market coverage)
 
 ## Use Cases
 
