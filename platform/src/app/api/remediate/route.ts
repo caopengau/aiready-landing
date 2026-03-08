@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/auth';
+import { auth } from '@/lib/auth';
 import { getRemediation, updateRemediation } from '@/lib/db/remediation';
 import { RefactorAgent } from '@aiready/agents';
 
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { remediationId } = await req.json();
+    const { remediationId, type } = await req.json();
     if (!remediationId) {
       return NextResponse.json(
         { error: 'Missing remediationId' },
@@ -26,11 +26,34 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 1. Update status to 'in-progress'
-    await updateRemediation(remediationId, {
-      status: 'in-progress',
-      agentStatus: 'Analyzing duplicates...',
-    });
+    // 2. Trigger the remediation cycle
+    const isSwarm = type === 'swarm';
+
+    if (isSwarm) {
+      await updateRemediation(remediationId, {
+        status: 'in-progress',
+        agentStatus: 'Remediation Swarm active: Analyzing architecture...',
+      });
+      // In a real implementation, we would call RemediationSwarm.execute()
+      // For the prototype, we simulate the stage transitions:
+      setTimeout(async () => {
+        await updateRemediation(remediationId, {
+          agentStatus: 'Swarm update: Refactoring Agent is applying fixes...',
+        });
+      }, 3000);
+
+      setTimeout(async () => {
+        await updateRemediation(remediationId, {
+          agentStatus:
+            'Swarm update: Validation Agent is verifying types/tests...',
+        });
+      }, 6000);
+    } else {
+      await updateRemediation(remediationId, {
+        status: 'in-progress',
+        agentStatus: 'Refactor agent started...',
+      });
+    }
 
     // 2. Trigger Mastra Refactor Agent (Simulated for Alpha)
     console.log(`[RemediateAPI] Triggering RefactorAgent for ${remediationId}`);

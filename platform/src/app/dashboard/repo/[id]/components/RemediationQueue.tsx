@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import * as Icons from '@/components/Icons';
 import type { RemediationRequest } from '@/lib/db/types';
+import { toast } from 'sonner';
 
 // Fail-safe icon helper
 const Icon = ({ name, className }: { name: string; className?: string }) => {
@@ -45,6 +46,32 @@ export function RemediationQueue({ repoId, hasIssues }: RemediationQueueProps) {
       setLoading(false);
     }
   }
+
+  const handleSwarm = async (remId: string) => {
+    try {
+      const res = await fetch('/api/remediate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: remId, type: 'swarm' }),
+      });
+      if (res.ok) {
+        toast.success('Remediation Swarm started');
+        setRemediations((prev) =>
+          prev.map((r) =>
+            r.id === remId
+              ? {
+                  ...r,
+                  status: 'in-progress',
+                  agentStatus: 'Swarm initializing...',
+                }
+              : r
+          )
+        );
+      }
+    } catch (err) {
+      toast.error('Failed to start swarm');
+    }
+  };
 
   async function handleApprove(id: string) {
     try {
@@ -191,7 +218,19 @@ export function RemediationQueue({ repoId, hasIssues }: RemediationQueueProps) {
                   </div>
 
                   <div className="ml-auto flex flex-col gap-2">
+                    {rem.status === 'pending' && rem.rank === 'P0' && (
+                      <button
+                        onClick={() => handleSwarm(rem.id)}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-purple-500 text-white rounded-lg hover:bg-purple-400 transition-all shadow-lg shadow-purple-500/10"
+                      >
+                        <span className="text-[10px] font-black uppercase">
+                          Trigger Swarm
+                        </span>
+                        <Icon name="ZapIcon" className="w-3 h-3" />
+                      </button>
+                    )}
                     {rem.status === 'pending' &&
+                      rem.rank !== 'P0' &&
                       (rem.risk === 'high' || rem.risk === 'critical') && (
                         <button
                           onClick={() => handleApprove(rem.id)}

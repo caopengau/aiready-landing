@@ -54,6 +54,27 @@ export async function seedInitialRemediations(repoId: string, userId: string) {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     },
+    {
+      id: 'rem-swarm-001',
+      repoId,
+      userId,
+      type: 'restructure' as const,
+      risk: 'critical' as const,
+      status: 'pending' as const,
+      title: 'Extreme Context Fragmentation: Auth & Identity',
+      description:
+        'Auth logic is scattered across 12 files. Triggering a Remediation Swarm to consolidate into a unified "identity" feature module with automated verification.',
+      affectedFiles: [
+        'src/auth/gate.ts',
+        'src/lib/auth-utils.ts',
+        'src/api/login.ts',
+      ],
+      estimatedSavings: 450,
+      priorityScore: 9.5,
+      rank: 'P0' as const,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    },
   ];
 
   for (const rem of remediations) {

@@ -3,4 +3,7 @@ export * from './src/refactor-agent';
 export * from './src/prioritization-agent';
 export * from './src/rename-agent';
 export * from './src/impact-agent';
+export * from './src/restructure-agent';
+export * from './src/validation-agent';
+export * from './src/workflows/remediation-swarm';
 export * from './src/tools/github';
