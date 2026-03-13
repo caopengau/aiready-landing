@@ -1,0 +1,12 @@
+const meta = {
+  title: 'The Living Repository: Infrastructure as a Blueprint',
+  date: '2026-04-12',
+  excerpt:
+    'The series finale. Discover how a single, versioned blueprint allows an autonomous team to mutate, evolve, and persist its own architecture over time.',
+  author: 'Peng Cao',
+  tags: ['Infrastructure', 'CDK', 'Monorepo', 'Agentic Readiness', 'AIReady'],
+  readingTime: '6 min read',
+  slug: 'living-repository',
+};
+
+export default meta;

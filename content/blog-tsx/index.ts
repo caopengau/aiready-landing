@@ -16,6 +16,26 @@ import TheAgenticWall from './the-agentic-wall';
 import theAgenticWallMeta from './the-agentic-wall.meta';
 import BeyondTheSidekick from './beyond-the-sidekick';
 import beyondTheSidekickMeta from './beyond-the-sidekick.meta';
+import TheEconomicMoat from './the-economic-moat';
+import theEconomicMoatMeta from './the-economic-moat.meta';
+import TheNeuralSpine from './the-neural-spine';
+import theNeuralSpineMeta from './the-neural-spine.meta';
+import ClosingTheLoop from './closing-the-loop';
+import closingTheLoopMeta from './closing-the-loop.meta';
+import CognitiveTiering from './cognitive-tiering';
+import cognitiveTieringMeta from './cognitive-tiering.meta';
+import ResilienceFortress from './resilience-fortress';
+import resilienceFortressMeta from './resilience-fortress.meta';
+import ObservabilityIntelligence from './observability-intelligence';
+import observabilityIntelligenceMeta from './observability-intelligence.meta';
+import HumanAgentCoManagement from './human-agent-co-management';
+import humanAgentCoManagementMeta from './human-agent-co-management.meta';
+import RecursiveSafety from './recursive-safety';
+import recursiveSafetyMeta from './recursive-safety.meta';
+import RoadmapToAutonomy from './roadmap-to-autonomy';
+import roadmapToAutonomyMeta from './roadmap-to-autonomy.meta';
+import LivingRepository from './living-repository';
+import livingRepositoryMeta from './living-repository.meta';
 
 export const posts = [
   {
@@ -27,6 +47,106 @@ export const posts = [
     tags: beyondTheSidekickMeta.tags || [],
     readingTime: beyondTheSidekickMeta.readingTime,
     Content: BeyondTheSidekick,
+  },
+  {
+    slug: theEconomicMoatMeta.slug,
+    title: theEconomicMoatMeta.title,
+    date: theEconomicMoatMeta.date,
+    excerpt: theEconomicMoatMeta.excerpt,
+    author: theEconomicMoatMeta.author,
+    tags: theEconomicMoatMeta.tags || [],
+    readingTime: theEconomicMoatMeta.readingTime,
+    Content: TheEconomicMoat,
+  },
+  {
+    slug: theNeuralSpineMeta.slug,
+    title: theNeuralSpineMeta.title,
+    date: theNeuralSpineMeta.date,
+    excerpt: theNeuralSpineMeta.excerpt,
+    author: theNeuralSpineMeta.author,
+    tags: theNeuralSpineMeta.tags || [],
+    readingTime: theNeuralSpineMeta.readingTime,
+    Content: TheNeuralSpine,
+  },
+  {
+    slug: closingTheLoopMeta.slug,
+    title: closingTheLoopMeta.title,
+    date: closingTheLoopMeta.date,
+    excerpt: closingTheLoopMeta.excerpt,
+    author: closingTheLoopMeta.author,
+    tags: closingTheLoopMeta.tags || [],
+    readingTime: closingTheLoopMeta.readingTime,
+    Content: ClosingTheLoop,
+  },
+  {
+    slug: cognitiveTieringMeta.slug,
+    title: cognitiveTieringMeta.title,
+    date: cognitiveTieringMeta.date,
+    excerpt: cognitiveTieringMeta.excerpt,
+    author: cognitiveTieringMeta.author,
+    tags: cognitiveTieringMeta.tags || [],
+    readingTime: cognitiveTieringMeta.readingTime,
+    Content: CognitiveTiering,
+  },
+  {
+    slug: resilienceFortressMeta.slug,
+    title: resilienceFortressMeta.title,
+    date: resilienceFortressMeta.date,
+    excerpt: resilienceFortressMeta.excerpt,
+    author: resilienceFortressMeta.author,
+    tags: resilienceFortressMeta.tags || [],
+    readingTime: resilienceFortressMeta.readingTime,
+    Content: ResilienceFortress,
+  },
+  {
+    slug: observabilityIntelligenceMeta.slug,
+    title: observabilityIntelligenceMeta.title,
+    date: observabilityIntelligenceMeta.date,
+    excerpt: observabilityIntelligenceMeta.excerpt,
+    author: observabilityIntelligenceMeta.author,
+    tags: observabilityIntelligenceMeta.tags || [],
+    readingTime: observabilityIntelligenceMeta.readingTime,
+    Content: ObservabilityIntelligence,
+  },
+  {
+    slug: humanAgentCoManagementMeta.slug,
+    title: humanAgentCoManagementMeta.title,
+    date: humanAgentCoManagementMeta.date,
+    excerpt: humanAgentCoManagementMeta.excerpt,
+    author: humanAgentCoManagementMeta.author,
+    tags: humanAgentCoManagementMeta.tags || [],
+    readingTime: humanAgentCoManagementMeta.readingTime,
+    Content: HumanAgentCoManagement,
+  },
+  {
+    slug: recursiveSafetyMeta.slug,
+    title: recursiveSafetyMeta.title,
+    date: recursiveSafetyMeta.date,
+    excerpt: recursiveSafetyMeta.excerpt,
+    author: recursiveSafetyMeta.author,
+    tags: recursiveSafetyMeta.tags || [],
+    readingTime: recursiveSafetyMeta.readingTime,
+    Content: RecursiveSafety,
+  },
+  {
+    slug: roadmapToAutonomyMeta.slug,
+    title: roadmapToAutonomyMeta.title,
+    date: roadmapToAutonomyMeta.date,
+    excerpt: roadmapToAutonomyMeta.excerpt,
+    author: roadmapToAutonomyMeta.author,
+    tags: roadmapToAutonomyMeta.tags || [],
+    readingTime: roadmapToAutonomyMeta.readingTime,
+    Content: RoadmapToAutonomy,
+  },
+  {
+    slug: livingRepositoryMeta.slug,
+    title: livingRepositoryMeta.title,
+    date: livingRepositoryMeta.date,
+    excerpt: livingRepositoryMeta.excerpt,
+    author: livingRepositoryMeta.author,
+    tags: livingRepositoryMeta.tags || [],
+    readingTime: livingRepositoryMeta.readingTime,
+    Content: LivingRepository,
   },
   {
     slug: theAgenticWallMeta.slug,

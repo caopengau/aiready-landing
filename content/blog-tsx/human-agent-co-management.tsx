@@ -1,0 +1,197 @@
+import meta from './human-agent-co-management.meta';
+import React from 'react';
+
+const Post = () => (
+  <>
+    <blockquote>
+      Part 9 of our series:{' '}
+      <strong>
+        &quot;The Agentic Readiness Shift: Building for Autonomous
+        Engineers.&quot;
+      </strong>
+    </blockquote>
+
+    <div className="my-12 max-w-5xl mx-auto text-center">
+      <div className="w-full h-64 bg-gradient-to-br from-indigo-900 via-slate-900 to-purple-900 rounded-3xl flex items-center justify-center border border-white/10 shadow-2xl mb-12">
+        <div className="text-center p-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 to-purple-200">
+            Human-Agent Co-Management
+          </h1>
+          <p className="text-indigo-200 text-lg md:text-xl">
+            The New Engineering Culture
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h2>The Fragmentation Problem</h2>
+    <p>
+      Current AI tools are siloed. You talk to one agent in a web browser,
+      another in your IDE, and maybe a third in a dedicated mobile app. Your
+      context is scattered, and none of them talk to each other. This isn&apos;t
+      just a UX issue; it&apos;s a management failure.
+    </p>
+    <p>
+      In an <strong>Agentic Team</strong>, your AI agent should be ubiquitous.
+      It shouldn&apos;t matter if you&apos;re on your laptop, your phone, or in
+      a team chat—the agent is always one pulse away. This is the foundation of{' '}
+      <strong>Human-Agent Co-Management</strong>.
+    </p>
+
+    <h2>The Unified Gateway</h2>
+    <p>
+      We built a <strong>Unified Gateway</strong> that normalizes signals from
+      different messaging platforms into a single &quot;intent stream.&quot;
+      Whether the trigger is a <code>/deploy</code> command from Telegram or an
+      automated bug report from Slack, the core engine receives the same
+      structured payload.
+    </p>
+
+    <div className="bg-slate-900 rounded-2xl p-8 my-12 border border-slate-800">
+      <div className="text-cyber-purple font-mono text-[10px] uppercase tracking-widest mb-6 border-b border-white/5 pb-2">
+        GATEWAY_REGISTRY.json (ACTIVE)
+      </div>
+      <pre className="text-xs font-mono text-zinc-300 overflow-x-auto">
+        {`{
+  "supported_channels": [
+    "telegram_bot_api",
+    "discord_webhooks",
+    "slack_events_api",
+    "bluebubbles_imessage_bridge"
+  ],
+  "normalization_engine": "v2. Standard"
+}`}
+      </pre>
+    </div>
+
+    <h2>A Culture of Shared Agency</h2>
+    <p>
+      The real shift isn&apos;t just technical; it&apos;s cultural. We are
+      moving from &quot;AI as a tool&quot; to &quot;AI as a team member.&quot;
+      This means:
+    </p>
+    <ul className="list-disc pl-6 mb-8 space-y-3">
+      <li>
+        <strong>Delegation</strong>: Giving agents permission to operate on
+        critical paths.
+      </li>
+      <li>
+        <strong>Review Loops</strong>: Treating agent commits with the same
+        rigor (and respect) as human commits.
+      </li>
+      <li>
+        <strong>Shared Identity</strong>: Maintaining context whether you are at
+        your desk or answering a Slack message on your phone.
+      </li>
+    </ul>
+
+    <p className="text-xl font-medium text-indigo-300">
+      The most successful engineering teams of the next decade won&apos;t just
+      have the best humans; they&apos;ll have the best human-agent synergy.
+    </p>
+
+    <hr className="my-12 border-slate-200 dark:border-zinc-800" />
+
+    <p>
+      <strong>Read &quot;The Agentic Readiness Shift&quot; series:</strong>
+    </p>
+    <ul className="list-disc pl-6 mb-4 space-y-2 text-sm">
+      <li>
+        <a
+          href="/blog/the-agentic-wall"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 1: The Agentic Wall (Context Fragmentation)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/beyond-the-sidekick"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 2: Beyond the Sidekick (Rise of the Agentic System)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/the-economic-moat"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 3: The Economic Moat (Quantifying AI ROI)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/the-neural-spine"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 4: The Neural Spine (Event-Driven Orchestration)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/closing-the-loop"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 5: Closing the Loop (Git as a Runtime)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/cognitive-tiering"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 6: Cognitive Tiering (Multi-Headed Brain)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/resilience-fortress"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 7: The Resilience Fortress (Death of the Transient Agent)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/observability-intelligence"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 8: Observability as Intelligence (Self-Critique)
+        </a>
+      </li>
+      <li>
+        <strong>
+          Part 9: Human-Agent Co-Management (New Engineering Culture) ← You are
+          here
+        </strong>
+      </li>
+      <li>
+        <a
+          href="/blog/recursive-safety"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 10: Recursive Safety (VPCs and Guards)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/roadmap-to-autonomy"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 11: Roadmap to Autonomy ($1/Month Agent)
+        </a>
+      </li>
+      <li>
+        <a
+          href="/blog/living-repository"
+          className="text-indigo-400 hover:text-indigo-300 transition-colors"
+        >
+          Part 12: The Living Repository (Infrastructure Blueprint)
+        </a>
+      </li>
+    </ul>
+  </>
+);
+
+export default Post;
