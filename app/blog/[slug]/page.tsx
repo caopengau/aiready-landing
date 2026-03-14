@@ -91,15 +91,17 @@ export default async function Page({ params }: Params) {
     readingTime: post.readingTime,
     tags: post.tags,
     slug: post.slug,
+    cover: post.cover,
+    ogImage: post.ogImage,
   };
 
-  const ogImage = imageMap[slug] || '/logo-text.png';
+  const ogImageUrl = post.ogImage || post.cover || '/logo-text.png';
   const articleSchema = generateArticleSchema({
     title: post.title,
     description: post.excerpt,
     datePublished: post.date,
     author: post.author,
-    image: `https://getaiready.dev${ogImage}`,
+    image: `https://getaiready.dev${ogImageUrl}`,
   });
 
   return (
