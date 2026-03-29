@@ -13,25 +13,55 @@ test.describe('Signup Flow', () => {
       page.locator('input[placeholder="you@company.com"]')
     ).toBeVisible();
 
-    // Check submit button
-    const submitBtn = page.locator('button:has-text("Create Free Account")');
+    // Check submit button (default is "managed" plan → "Start One-Click Setup")
+    const submitBtn = page.locator('button[type="submit"]');
     await expect(submitBtn).toBeVisible();
     await expect(submitBtn).toBeEnabled();
   });
 
-  test('signup page shows free tier benefits', async ({ page }) => {
+  test('signup page shows plan selection options', async ({ page }) => {
     await page.goto('/signup');
 
+    // Check plan selection buttons exist
+    await expect(page.locator('text=Managed Node')).toBeVisible();
+    await expect(page.locator('text=Free Tier')).toBeVisible();
+    await expect(page.locator('text=$29')).toBeVisible();
+    await expect(page.locator('text=$0')).toBeVisible();
+  });
+
+  test('signup page shows managed node benefits by default', async ({
+    page,
+  }) => {
+    await page.goto('/signup');
+
+    // Check managed node benefits are listed (default selection)
+    await expect(page.locator('text=Dedicated AWS Managed Node')).toBeVisible();
+    await expect(
+      page.locator('text=Unlimited Repositories & Scans')
+    ).toBeVisible();
+    await expect(
+      page.locator('text=$10 Monthly AI Fuel Allowance')
+    ).toBeVisible();
+  });
+
+  test('signup page shows free tier benefits when selected', async ({
+    page,
+  }) => {
+    await page.goto('/signup');
+
+    // Click on Free Tier button
+    await page.click('button:has-text("Free Tier")');
+
     // Check free tier features are listed
-    await expect(page.locator('text=3 repositories')).toBeVisible();
-    await expect(page.locator('text=10 analysis runs')).toBeVisible();
-    await expect(page.locator('text=$5 welcome')).toBeVisible();
+    await expect(page.locator('text=3 public repositories')).toBeVisible();
+    await expect(page.locator('text=10 analysis runs / month')).toBeVisible();
+    await expect(page.locator('text=$5 welcome AI credit')).toBeVisible();
   });
 
   test('signup page has link to login', async ({ page }) => {
     await page.goto('/signup');
 
-    const loginLink = page.locator('a:has-text("Sign in")');
+    const loginLink = page.locator('a:has-text("Sign in")').first();
     await expect(loginLink).toBeVisible();
     await expect(loginLink).toHaveAttribute('href', '/login');
   });
@@ -39,8 +69,11 @@ test.describe('Signup Flow', () => {
   test('signup form validates required fields', async ({ page }) => {
     await page.goto('/signup');
 
+    // Select free tier to get "Create Free Account" button text
+    await page.click('button:has-text("Free Tier")');
+
     // Try to submit empty form
-    const submitBtn = page.locator('button:has-text("Create Free Account")');
+    const submitBtn = page.locator('button[type="submit"]');
 
     // HTML5 validation should prevent submission
     // The form has `required` attributes
@@ -53,6 +86,9 @@ test.describe('Signup Flow', () => {
   test('signup form submits and shows success state', async ({ page }) => {
     await page.goto('/signup');
 
+    // Select free tier to get "Create Free Account" button
+    await page.click('button:has-text("Free Tier")');
+
     // Fill form
     await page.fill('input[placeholder="Jane Smith"]', 'Test User');
     await page.fill(
@@ -61,7 +97,7 @@ test.describe('Signup Flow', () => {
     );
 
     // Submit
-    await page.click('button:has-text("Create Free Account")');
+    await page.click('button[type="submit"]');
 
     // Should show success state with "Account Created"
     await expect(page.locator('text=Account Created')).toBeVisible({
@@ -79,7 +115,7 @@ test.describe('Login Page', () => {
       page.locator('input[placeholder="you@company.com"]')
     ).toBeVisible();
     await expect(
-      page.locator('button:has-text("Send Magic Link")')
+      page.locator('button[type="submit"]:has-text("Send Magic Link")')
     ).toBeVisible();
   });
 

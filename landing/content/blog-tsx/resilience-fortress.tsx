@@ -60,16 +60,52 @@ const Post = () => (
       doesn&apos;t just act, but understands <em>why</em> it acts.
     </p>
 
-    <div className="p-10 bg-indigo-900/20 border border-indigo-500/30 rounded-3xl relative overflow-hidden group my-12">
-      <h4 className="text-indigo-400 font-black text-xs uppercase tracking-widest mb-4">
-        RECURSIVE_INTEGRITY_CHECK
-      </h4>
-      <p className="text-sm text-zinc-300 leading-relaxed italic mb-0">
-        &quot;By persisting mutations to Git, we ensure that the system&apos;s
-        reasoning is versioned alongside its execution. Every
-        &apos;thought&apos; is a commit. Every &apos;action&apos; is a
-        merge.&quot;
-      </p>
+    <div className="p-12 bg-indigo-50 dark:bg-indigo-500/5 border border-indigo-100 dark:border-indigo-500/10 rounded-[2.5rem] relative overflow-hidden group my-16 shadow-xl shadow-indigo-500/5">
+      <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-indigo-600 via-purple-500 to-indigo-600 dark:from-indigo-400 dark:via-purple-400 dark:to-indigo-400" />
+      <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
+        <svg
+          width="120"
+          height="120"
+          viewBox="0 0 120 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="text-indigo-600 dark:text-indigo-400"
+        >
+          <circle
+            cx="60"
+            cy="60"
+            r="58"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            strokeDasharray="4 4"
+          />
+          <circle
+            cx="60"
+            cy="60"
+            r="40"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            strokeDasharray="2 2"
+          />
+        </svg>
+      </div>
+      <div className="relative z-10">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-600 dark:bg-indigo-400"></span>
+          </span>
+          <h4 className="text-indigo-600 dark:text-indigo-400 font-black text-[11px] uppercase tracking-[0.3em] m-0">
+            RECURSIVE_INTEGRITY_CHECK
+          </h4>
+        </div>
+        <p className="text-xl md:text-2xl text-indigo-950 dark:text-white leading-relaxed italic mb-0 font-light tracking-tight">
+          &quot;By persisting mutations to Git, we ensure that the system&apos;s
+          reasoning is versioned alongside its execution. Every
+          &apos;thought&apos; is a commit. Every &apos;action&apos; is a
+          merge.&quot;
+        </p>
+      </div>
     </div>
 
     <p className="text-xl font-medium text-indigo-300">
