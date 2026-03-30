@@ -1,0 +1,20 @@
+const meta = {
+  title: 'Part 2: Beyond the Sidekick (Rise of the Agentic System)',
+  date: '2026-03-03',
+  excerpt:
+    "Part 2 of 'The Agentic Readiness Shift' series. Moving beyond the AI 'sidekick' and into the era of the autonomous Agentic System.",
+  author: 'Peng Cao',
+  tags: [
+    'The Agentic Readiness Shift',
+    'AI Agents',
+    'Agentic Shift',
+    'Serverless Claw',
+    'Autonomous Systems',
+  ],
+  readingTime: '4 min read',
+  slug: 'beyond-the-sidekick',
+  cover: '/agentic-shift-series-2.png',
+  ogImage: '',
+};
+
+export default meta;

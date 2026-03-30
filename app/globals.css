@@ -1,0 +1,599 @@
+@import 'tailwindcss';
+
+/* Critical: Ensure all content is visible by default (no hidden animations) */
+* {
+  animation-fill-mode: backwards !important;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  /* Code block theming */
+  --code-bg: #f8fafc;
+  --code-border: #e6edf3;
+  --code-foreground: #0f172a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --code-bg: #0d1117;
+    --code-border: #111318;
+    --code-foreground: #e6eef6;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Glow Effects */
+.glow-text {
+  text-shadow: 0 0 10px rgba(79, 70, 229, 0.4);
+}
+
+.glow-blue {
+  text-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
+  color: #22d3ee !important;
+}
+
+.glow-purple {
+  text-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+  color: #c084fc !important;
+}
+
+.hover\:glow-blue:hover {
+  text-shadow: 0 0 15px rgba(6, 182, 212, 0.7);
+  color: #22d3ee !important;
+}
+
+.hover\:glow-purple:hover {
+  text-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+  color: #c084fc !important;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Light theme: Dark scrollbar */
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 20px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1e293b;
+  background-clip: content-box;
+}
+
+/* Dark mode: Light scrollbar */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #f1f5f9;
+  }
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #f1f5f9;
+}
+
+/* Sci-fi styled scrollbar for dark sections */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-track-slate-800\/50::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 10px;
+}
+
+.scrollbar-thumb-cyan-500\/30::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.2);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.scrollbar-thin:hover::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.5);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+}
+
+/* Light theme thin scrollbar */
+.scrollbar-thin-light::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin-light::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.scrollbar-thin-light::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.scrollbar-thin-light::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property:
+    color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Section title styles */
+h2 {
+  font-size: 1.75rem; /* bigger */
+  font-weight: 700; /* bold */
+  line-height: 1.2;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Code block base styles (used by CodeBlock component) */
+.code-block {
+  background: #0d1117;
+  color: #f0f6fc;
+  border: 1px solid #30363d;
+}
+
+.code-block pre {
+  background: transparent;
+}
+
+.code-block code {
+  color: #f0f6fc !important;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono',
+    'Helvetica Neue', monospace;
+  font-size: 0.92rem;
+  line-height: 1.35; /* tighter lines */
+}
+
+/* Base hljs syntax highlighting (replaces github-dark.css) */
+.code-block .hljs {
+  color: #f0f6fc !important;
+}
+
+.code-block .hljs-doctag,
+.code-block .hljs-keyword,
+.code-block .hljs-meta .hljs-keyword,
+.code-block .hljs-template-tag,
+.code-block .hljs-template-variable,
+.code-block .hljs-type,
+.code-block .hljs-variable.language_ {
+  color: #ff7b72 !important;
+}
+
+.code-block .hljs-title,
+.code-block .hljs-title.class_,
+.code-block .hljs-title.class_.inherited__,
+.code-block .hljs-title.function_ {
+  color: #d2a8ff !important;
+}
+
+.code-block .hljs-attr,
+.code-block .hljs-attribute,
+.code-block .hljs-literal,
+.code-block .hljs-meta,
+.code-block .hljs-number,
+.code-block .hljs-operator,
+.code-block .hljs-selector-attr,
+.code-block .hljs-selector-class,
+.code-block .hljs-selector-id,
+.code-block .hljs-variable {
+  color: #79c0ff !important;
+}
+
+.code-block .hljs-meta .hljs-string,
+.code-block .hljs-regexp,
+.code-block .hljs-string {
+  color: #a5d6ff !important;
+}
+
+.code-block .hljs-built_in,
+.code-block .hljs-symbol {
+  color: #ffa657 !important;
+}
+
+.code-block .hljs-code,
+.code-block .hljs-comment,
+.code-block .hljs-formula {
+  color: #8b949e !important;
+}
+
+.code-block .hljs-name,
+.code-block .hljs-quote,
+.code-block .hljs-selector-pseudo,
+.code-block .hljs-selector-tag {
+  color: #7ee787 !important;
+}
+
+.code-block .hljs-subst {
+  color: #f0f6fc !important;
+}
+
+.code-block .hljs-section {
+  color: #1f6feb !important;
+  font-weight: 700;
+}
+
+.code-block .hljs-bullet {
+  color: #f2cc60 !important;
+}
+
+.code-block .hljs-emphasis {
+  color: #f0f6fc !important;
+  font-style: italic;
+}
+
+.code-block .hljs-strong {
+  color: #f0f6fc !important;
+  font-weight: 700;
+}
+
+.code-block .hljs-addition {
+  color: #aff5b4 !important;
+  background-color: #033a16;
+}
+
+.code-block .hljs-deletion {
+  color: #ffdcd7 !important;
+  background-color: #67060c;
+}
+
+/* Enhanced syntax highlighting for better dark mode readability */
+@media (prefers-color-scheme: dark) {
+  /* Strings - very bright cyan-white for maximum visibility */
+  .code-block .hljs-string,
+  .code-block .hljs-attr,
+  .code-block .hljs-template-variable,
+  .code-block .hljs-symbol,
+  .code-block .hljs-bullet,
+  .code-block .hljs-addition {
+    color: #e3f8ff !important; /* Even brighter blue-white */
+  }
+
+  /* Keywords - vibrant purple */
+  .code-block .hljs-keyword,
+  .code-block .hljs-selector-tag,
+  .code-block .hljs-literal,
+  .code-block .hljs-section,
+  .code-block .hljs-link {
+    color: #d2a8ff !important; /* Light purple */
+  }
+
+  /* Functions and variables - bright cyan */
+  .code-block .hljs-title,
+  .code-block .hljs-name,
+  .code-block .hljs-variable,
+  .code-block .hljs-template-tag,
+  .code-block .hljs-class .hljs-title {
+    color: #79c0ff !important; /* Bright blue */
+  }
+
+  /* Numbers - bright orange */
+  .code-block .hljs-number,
+  .code-block .hljs-regexp,
+  .code-block .hljs-meta {
+    color: #ffa657 !important; /* Bright orange */
+  }
+
+  /* Comments - medium gray with good contrast */
+  .code-block .hljs-comment,
+  .code-block .hljs-quote {
+    color: #8b949e !important; /* Medium gray */
+    font-style: italic;
+  }
+
+  /* Types and classes - bright green */
+  .code-block .hljs-type,
+  .code-block .hljs-built_in,
+  .code-block .hljs-builtin-name,
+  .code-block .hljs-doctag {
+    color: #7ee787 !important; /* Bright green */
+  }
+
+  /* Attributes and properties - lighter teal */
+  .code-block .hljs-attribute,
+  .code-block .hljs-property {
+    color: #79c0ff !important; /* Bright blue */
+  }
+
+  /* Operators - bright white */
+  .code-block .hljs-operator,
+  .code-block .hljs-punctuation {
+    color: #e6edf3 !important; /* Bright white */
+  }
+
+  /* Tags (for markup) - light green */
+  .code-block .hljs-tag {
+    color: #7ee787 !important;
+  }
+
+  /* Deletion - light red */
+  .code-block .hljs-deletion {
+    color: #ffa198 !important;
+  }
+
+  /* Base text - ensure good contrast */
+  .code-block code {
+    color: #f0f6fc !important; /* Very bright white-blue */
+  }
+}
+
+/* Prose typography styles for blog content */
+.prose {
+  color: #374151;
+  max-width: 65ch;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose a {
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.prose strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.prose ol {
+  list-style-type: decimal;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-left: 1.625em;
+}
+
+.prose ul {
+  list-style-type: disc;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-left: 1.625em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose hr {
+  border-color: #e5e7eb;
+  border-top-width: 1px;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.prose blockquote {
+  font-weight: 500;
+  font-style: italic;
+  color: #111827;
+  border-left-width: 0.25rem;
+  border-left-color: #e5e7eb;
+  margin-top: 1.6em;
+  margin-bottom: 1.6em;
+  padding-left: 1em;
+}
+
+.prose h1 {
+  color: #111827;
+  font-weight: 800;
+  font-size: 2.25em;
+  margin-top: 0;
+  margin-bottom: 0.8888889em;
+  line-height: 1.1111111;
+}
+
+.prose h2 {
+  color: #111827;
+  font-weight: 700;
+  font-size: 1.5em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  line-height: 1.3333333;
+}
+
+.prose h3 {
+  color: #111827;
+  font-weight: 600;
+  font-size: 1.25em;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  line-height: 1.6;
+}
+
+.prose h4 {
+  color: #111827;
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.5;
+}
+
+.prose img {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  max-width: 100%;
+  height: auto;
+}
+
+.prose code {
+  color: #111827;
+  font-weight: 600;
+  font-size: 0.875em;
+  background-color: #f3f4f6;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+.prose pre {
+  color: #e5e7eb;
+  background-color: #1f2937;
+  overflow-x: auto;
+  font-size: 0.875em;
+  line-height: 1.7142857;
+  margin-top: 1.7142857em;
+  margin-bottom: 1.7142857em;
+  border-radius: 0.375rem;
+  padding: 0.8571429em 1.1428571em;
+}
+
+.prose pre code {
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 0;
+  padding: 0;
+  font-weight: inherit;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+}
+
+.prose-lg {
+  font-size: 1.125rem;
+  line-height: 1.7777778;
+}
+
+.prose-xl {
+  font-size: 1.25rem;
+  line-height: 1.8;
+}
+
+/* Dark mode prose - Support both system preference and manual .dark class */
+@media (prefers-color-scheme: dark) {
+  .prose {
+    color: #f1f5f9;
+  }
+  .prose a {
+    color: #60a5fa;
+  }
+  .prose strong,
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    color: #ffffff;
+  }
+  .prose code {
+    color: #38bdf8;
+    background-color: #1e293b;
+  }
+  .prose blockquote {
+    color: #e2e8f0;
+    border-left-color: #3b82f6;
+  }
+  .prose hr {
+    border-color: #334155;
+  }
+}
+.dark .prose {
+  color: #f1f5f9;
+}
+.dark .prose a {
+  color: #60a5fa;
+}
+.dark .prose strong,
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4 {
+  color: #ffffff;
+}
+.dark .prose code {
+  color: #38bdf8;
+  background-color: #1e293b;
+}
+.dark .prose blockquote {
+  color: #e2e8f0;
+  border-left-color: #3b82f6;
+}
+.dark .prose hr {
+  border-color: #334155;
+}
