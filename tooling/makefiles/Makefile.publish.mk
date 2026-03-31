@@ -30,7 +30,7 @@ define require_spoke
 		$(call log_error,SPOKE parameter required. Usage: make $@ SPOKE=pattern-detect); \
 		exit 1; \
 	fi; \
-	d="$(ROOT_DIR)/$$(call SPOKE_DIR,$(SPOKE))"; \
+	d="$(ROOT_DIR)/$(call SPOKE_DIR,$(SPOKE))"; \
 	if [ ! -d "$$d" ]; then \
 		$(call log_error,Package $$d not found); \
 		exit 1; \
@@ -76,9 +76,9 @@ version-patch: ## Bump spoke patch version (0.1.0 -> 0.1.1). Usage: make version
 	$(call require_spoke)
 	@$(call log_step,Bumping @aiready/$(SPOKE) patch version...)
 # dangerous suppress errors because version does gets bumped
-	@spk_dir="$$(call SPOKE_DIR,$(SPOKE))"; \
-	cd $$spk_dir && pnpm version patch --no-git-tag-version 2>/dev/null || true; \
-	$(call log_success,Version bumped to $$(cd $$spk_dir && node -p "require('./package.json').version"))
+	@spk_dir="$(call SPOKE_DIR,$(SPOKE))"; \
+	cd "$$spk_dir" && pnpm version patch --no-git-tag-version 2>/dev/null || true; \
+	$(call log_success,Version bumped to $$(cd "$$spk_dir" && node -p "require('./package.json').version"))
 
 version-patch-vscode: ## Bump VS Code extension patch version
 	@$(call log_step,Bumping VS Code extension patch version...)
@@ -94,17 +94,17 @@ version-minor: ## Bump spoke minor version (0.1.0 -> 0.2.0). Usage: make version
 	$(call require_spoke)
 	@$(call log_step,Bumping @aiready/$(SPOKE) minor version...)
 # dangerous suppress errors because version does gets bumped
-	@spk_dir="$$(call SPOKE_DIR,$(SPOKE))"; \
-	cd $$spk_dir && pnpm version minor --no-git-tag-version 2>/dev/null || true; \
-	$(call log_success,Version bumped to $$(cd $$spk_dir && node -p "require('./package.json').version"))
+	@spk_dir="$(call SPOKE_DIR,$(SPOKE))"; \
+	cd "$$spk_dir" && pnpm version minor --no-git-tag-version 2>/dev/null || true; \
+	$(call log_success,Version bumped to $$(cd "$$spk_dir" && node -p "require('./package.json').version"))
 
 version-major: ## Bump spoke major version (0.1.0 -> 1.0.0). Usage: make version-major SPOKE=pattern-detect
 	$(call require_spoke)
 	@$(call log_step,Bumping @aiready/$(SPOKE) major version...)
 # dangerous suppress errors because version does gets bumped
-	@spk_dir="$$(call SPOKE_DIR,$(SPOKE))"; \
-	cd $$spk_dir && pnpm version major --no-git-tag-version 2>/dev/null || true; \
-	$(call log_success,Version bumped to $$(cd $$spk_dir && node -p "require('./package.json').version"))
+	@spk_dir="$(call SPOKE_DIR,$(SPOKE))"; \
+	cd "$$spk_dir" && pnpm version major --no-git-tag-version 2>/dev/null || true; \
+	$(call log_success,Version bumped to $$(cd "$$spk_dir" && node -p "require('./package.json').version"))
 
 # Generic npm publish (requires SPOKE parameter)
 npm-publish: npm-check ## Publish spoke to npm. Usage: make npm-publish SPOKE=pattern-detect
@@ -113,8 +113,8 @@ npm-publish: npm-check ## Publish spoke to npm. Usage: make npm-publish SPOKE=pa
 	@if [ "$(SKIP_NPM)" = "1" ]; then \
 		$(call log_info,SKIP_NPM=1 detected. Skipping npm publish for @aiready/$(SPOKE).); \
 	else \
-		spk_dir="$$(call SPOKE_DIR,$(SPOKE))"; \
-		cd $$spk_dir && pnpm publish --access public --no-git-checks || { \
+		spk_dir="$(call SPOKE_DIR,$(SPOKE))"; \
+		cd "$$spk_dir" && pnpm publish --access public --no-git-checks || { \
 			$(call log_error,Publish failed); \
 			exit 1; \
 		}; \
@@ -128,12 +128,12 @@ publish: ## Publish spoke to GitHub. Usage: make publish SPOKE=pattern-detect [O
 	@url="https://github.com/$(OWNER)/aiready-$(SPOKE).git"; \
 	remote="aiready-$(SPOKE)"; \
 	branch="publish-$(SPOKE)"; \
-	spk_dir="$$(call SPOKE_DIR,$(SPOKE))"; \
+	spk_dir="$(call SPOKE_DIR,$(SPOKE))"; \
 	git remote add "$$remote" "$$url" 2>/dev/null || git remote set-url "$$remote" "$$url"; \
 	$(call log_info,Remote set: $$remote -> $$url); \
 	git branch -D "$$branch" >/dev/null 2>&1 || true; \
-	$(call log_info,Creating subtree split for $$spk_dir...); \
-	git subtree split --prefix=$$spk_dir -b "$$branch" >/dev/null; \
+	$(call log_info,Creating subtree split for "$$spk_dir"...); \
+	git subtree split --prefix="$$spk_dir" -b "$$branch" >/dev/null; \
 	$(call log_info,Subtree split complete: $$branch); \
 	split_commit=$$(git rev-parse "$$branch"); \
 	git push --no-verify -f "$$remote" "$$branch":$(TARGET_BRANCH); \
@@ -252,12 +252,12 @@ sync-from-spoke: ## Sync changes from spoke repo back to monorepo. Usage: make s
 	@$(call log_step,Syncing changes from aiready-$(SPOKE) back to monorepo...)
 	@url="https://github.com/$(OWNER)/aiready-$(SPOKE).git"; \
 	remote="aiready-$(SPOKE)"; \
-	spk_dir="$$(call SPOKE_DIR,$(SPOKE))"; \
+	spk_dir="$(call SPOKE_DIR,$(SPOKE))"; \
 	git remote add "$$remote" "$$url" 2>/dev/null || git remote set-url "$$remote" "$$url"; \
 	$(call log_info,Fetching latest from $$remote...); \
 	git fetch "$$remote" $(TARGET_BRANCH); \
-	$(call log_info,Pulling changes into $$spk_dir...); \
-	git subtree pull --prefix=$$spk_dir "$$remote" $(TARGET_BRANCH) --squash -m "chore: sync $(SPOKE) from public repo"; \
+	$(call log_info,Pulling changes into "$$spk_dir"...); \
+	git subtree pull --prefix="$$spk_dir" "$$remote" $(TARGET_BRANCH) --squash -m "chore: sync $(SPOKE) from public repo"; \
 	$(call log_success,Synced changes from aiready-$(SPOKE))
 
 pull: ## Alias for sync-from-spoke. Usage: make pull SPOKE=pattern-detect
