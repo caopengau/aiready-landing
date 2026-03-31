@@ -73,8 +73,8 @@ export default function SeriesNavigation({
             className="flex-1 group p-6 rounded-3xl bg-zinc-900/30 border border-white/5 hover:border-cyber-blue/30 transition-all flex flex-col items-start gap-2"
           >
             <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500 uppercase tracking-widest group-hover:text-cyber-blue transition-colors">
-              <ArrowLeft className="w-3 h-3" /> Previous{' '}
-              {prevPost.series ? 'Episode' : 'Post'}
+              <ArrowLeft className="w-3 h-3" />
+              <span>Previous {prevPost.series ? 'Episode' : 'Post'}</span>
             </div>
             <div className="text-sm font-black italic text-white uppercase tracking-tight group-hover:translate-x-1 transition-transform">
               {prevPost.title}
@@ -109,7 +109,7 @@ export default function SeriesNavigation({
             className="flex-1 group p-6 rounded-3xl bg-zinc-900/30 border border-white/5 hover:border-cyber-blue/30 transition-all flex flex-col items-end text-right gap-2"
           >
             <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500 uppercase tracking-widest group-hover:text-cyber-blue transition-colors">
-              Next {nextPost.series ? 'Episode' : 'Post'}{' '}
+              <span>Next {nextPost.series ? 'Episode' : 'Post'}</span>
               <ArrowRight className="w-3 h-3" />
             </div>
             <div className="text-sm font-black italic text-white uppercase tracking-tight group-hover:-translate-x-1 transition-transform">
