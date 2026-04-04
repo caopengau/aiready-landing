@@ -401,7 +401,7 @@ npx @aiready/cli scan --score
 **Resources:**
 
 - GitHub: [github.com/getaiready/aiready-cli](https://github.com/getaiready/aiready-cli)
-- Docs: [aiready.dev](https://aiready.dev)
+- Docs: [getaiready.dev](https://getaiready.dev)
 - Report issues: [github.com/getaiready/aiready-cli/issues](https://github.com/getaiready/aiready-cli/issues)
 
 ---

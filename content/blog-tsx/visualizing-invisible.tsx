@@ -304,7 +304,7 @@ npx aiready visualise --output report.html`}</CodeBlock>
         </a>
       </li>
       <li>
-        Docs: <a href="https://aiready.dev">aiready.dev</a>
+        Docs: <a href="https://getaiready.dev">getaiready.dev</a>
       </li>
       <li>
         Report issues:{' '}

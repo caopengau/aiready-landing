@@ -82,8 +82,8 @@ Over the coming weeks, we will be doing a **Deep Dive Series** into each of thes
 ---
 
 - GitHub: [github.com/getaiready/aiready-cli](https://github.com/getaiready/aiready-cli)
-- Platform: [platform.aiready.dev](https://platform.aiready.dev)
-- Docs: [aiready.dev/docs](https://aiready.dev/docs)
+- Platform: [platform.getaiready.dev](https://platform.getaiready.dev)
+- Docs: [getaiready.dev/docs](https://getaiready.dev/docs)
 
 ---
 
