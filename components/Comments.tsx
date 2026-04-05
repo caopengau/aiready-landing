@@ -15,7 +15,7 @@ export function Comments({ slug, title: _title }: CommentsProps) {
 
     const script = document.createElement('script');
     script.src = 'https://giscus.app/client.js';
-    script.setAttribute('data-repo', 'caopengau/aiready-cli');
+    script.setAttribute('data-repo', 'getaiready/aiready-cli');
     script.setAttribute('data-repo-id', 'R_kgDOQ4p1VQ');
     script.setAttribute('data-category', 'General');
     script.setAttribute('data-category-id', 'DIC_kwDOQ4p1Vc4C1tDW');

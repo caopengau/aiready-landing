@@ -187,7 +187,7 @@ export function AIOptimizedContent() {
         </div>
         <link
           itemProp="codeRepository"
-          href="https://github.com/caopengau/aiready-cli"
+          href="https://github.com/getaiready/aiready-cli"
         />
         <link
           itemProp="downloadUrl"

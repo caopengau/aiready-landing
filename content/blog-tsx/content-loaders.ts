@@ -44,7 +44,7 @@ export const contentLoaders: Record<string, () => Promise<{ default: any }>> = {
   'the-9-metrics': () => import('./the-9-metrics'),
   'living-documentation': () => import('./living-documentation'),
   'architecting-for-agents': () => import('./architecting-for-agents'),
-  'the-readiness-scorecard': () => import('./the-readiness-scorecard'),
+  'readiness-scorecard': () => import('./readiness-scorecard'),
   'getting-started-with-aiready-cli': () =>
     import('./getting-started-with-aiready-cli'),
   'why-ai-coding-assistants-get-worse': () =>

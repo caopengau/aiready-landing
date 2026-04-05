@@ -46,6 +46,6 @@ aiready scan .
 
 ## Support
 
-- GitHub: https://github.com/caopengau/aiready-cli
-- Issues: https://github.com/caopengau/aiready-cli/issues
+- GitHub: https://github.com/getaiready/aiready-cli
+- Issues: https://github.com/getaiready/aiready-cli/issues
 - npm: https://www.npmjs.com/package/@aiready/cli

@@ -11,6 +11,7 @@ export const siteConfig = {
     twitter: 'https://twitter.com/aireadytools',
     github: 'https://github.com/getaiready/aiready-cli',
     npm: 'https://www.npmjs.com/package/@aiready/cli',
+    sponsor: 'https://github.com/sponsors/caopengau',
   },
 };
 

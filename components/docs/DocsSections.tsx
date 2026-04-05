@@ -139,7 +139,7 @@ export function MetricsSection() {
           </p>
         </div>
         <a
-          href="https://github.com/caopengau/aiready/blob/main/packages/cli/docs/SPOKE_GUIDE.md"
+          href="https://github.com/getaiready/aiready-cli/blob/main/docs/SPOKE_GUIDE.md"
           className="bg-white text-slate-900 px-8 py-4 rounded-xl font-bold hover:bg-slate-100 transition-all whitespace-nowrap"
         >
           Build New Metrics →

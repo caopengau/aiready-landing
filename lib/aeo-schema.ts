@@ -28,6 +28,7 @@ export const generateOrganizationSchema = () => {
       'https://github.com/getaiready/aiready-cli',
       'https://www.npmjs.com/package/@aiready/cli',
       'https://twitter.com/aireadytools',
+      'https://github.com/sponsors/caopengau',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
@@ -97,6 +98,11 @@ export const generateSoftwareApplicationSchema = () => {
       'MH-MA, Multi-Human Multi-Agent Collaboration, CLI, MCP, Model Context Protocol, Cursor, Windsurf, Claude, code analysis, AI optimization, semantic duplicates, context window, code consistency, developer tools, static analysis, Agentic Readiness',
     programmingLanguage: ['TypeScript', 'JavaScript'],
     codeRepository: 'https://github.com/getaiready/aiready-cli',
+    maintainer: {
+      '@type': 'Person',
+      name: 'Peng Cao',
+      url: 'https://github.com/caopengau',
+    },
     softwareRequirements: 'Node.js 18+',
     releaseNotes: 'https://github.com/getaiready/aiready-cli/releases',
     license: 'https://opensource.org/licenses/MIT',

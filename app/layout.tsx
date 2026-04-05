@@ -133,7 +133,7 @@ export const metadata: Metadata = {
     'ucp:action': 'npx @aiready/cli scan',
     'ucp:pricing': 'Free',
     'ucp:license': 'MIT',
-    'ucp:repository': 'https://github.com/caopengau/aiready-cli',
+    'ucp:repository': 'https://github.com/getaiready/aiready-cli',
   },
 };
 

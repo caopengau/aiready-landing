@@ -7,7 +7,7 @@
 AIReady is a free, open-source suite of command-line tools and Model Context Protocol (MCP) services designed to analyze and optimize codebases for better AI collaboration and autonomous agent navigation. It identifies issues that cause "Agentic Wall" failures, context window drowning, and hallucination-risk patterns.
 
 **Website**: https://getaiready.dev
-**GitHub**: https://github.com/caopengau/aiready
+**GitHub**: https://github.com/getaiready/aiready-cli
 **MCP Registry**: https://smithery.ai/mcp/@aiready/mcp-server
 
 ## Core Philosophy: Agentic Readiness
@@ -418,7 +418,7 @@ A: Typically 5-30 seconds for medium projects (100-500 files). Scales linearly w
 
 ## Contributing
 
-Contributions welcome! See [CONTRIBUTING.md](https://github.com/caopengau/aiready-cli/blob/main/CONTRIBUTING.md)
+Contributions welcome! See [CONTRIBUTING.md](https://github.com/getaiready/aiready-cli/blob/main/CONTRIBUTING.md)
 
 Areas we'd love help with:
 - Language support expansion (Python, Java, Go, Rust)
@@ -433,7 +433,7 @@ MIT License - Free for personal and commercial use
 
 ## Maintainers
 
-AIReady Team - https://github.com/caopengau/aiready-cli
+AIReady Team - https://github.com/getaiready/aiready-cli
 
 ## Version
 
