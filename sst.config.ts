@@ -15,10 +15,7 @@ export default $config({
   app(input) {
     const stage = input?.stage || 'dev';
     return {
-      name:
-        stage === 'production'
-          ? 'aiready-landing-prod'
-          : 'aiready-landing-' + stage,
+      name: 'aiready-landing-' + stage,
       removal: stage === 'production' ? 'retain' : 'remove',
       home: 'aws',
     };
@@ -67,7 +64,9 @@ export default $config({
       ],
     });
 
-    // Static site deployment
+    // Static site deployment - domain only for prod to prevent conflicts
+    const useCustomDomain = $app.stage === 'production';
+
     const site = new sst.aws.StaticSite('AireadyLanding', {
       path: './',
       build: {
@@ -77,17 +76,16 @@ export default $config({
       environment: {
         NEXT_PUBLIC_REQUEST_URL: api.url,
       },
-      domain:
-        $app.stage === 'production'
-          ? {
-              name: 'getaiready.dev',
-              redirects: ['www.getaiready.dev'],
-              dns: sst.cloudflare.dns({
-                zone: cloudflareZoneId,
-                proxy: true,
-              }),
-            }
-          : undefined,
+      ...(useCustomDomain && {
+        domain: {
+          name: 'getaiready.dev',
+          redirects: ['www.getaiready.dev'],
+          dns: sst.cloudflare.dns({
+            zone: cloudflareZoneId,
+            proxy: true,
+          }),
+        },
+      }),
       invalidation: {
         paths: ['/*'],
         wait: true,
