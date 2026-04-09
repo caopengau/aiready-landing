@@ -25,6 +25,7 @@ export default $config({
     // Storage for report submissions
     const submissions = new sst.aws.Bucket('Submissions', {
       public: false,
+      versioned: false,
     });
 
     // SES domain identity is managed as infrastructure so DNS verification is reproducible.
