@@ -4,11 +4,9 @@
 export default $config({
   app(input) {
     const stage = input?.stage || 'dev';
-    // Use fixed app name for production (uses existing resources), dynamic for dev (avoids lock)
-    const name =
-      stage === 'production' ? 'aiready-landing' : 'aiready-landing-' + stage;
+    // Use unique app names to avoid SST lock issues across stages
     return {
-      name,
+      name: 'aiready-landing-' + stage,
       removal: stage === 'production' ? 'retain' : 'remove',
       home: 'aws',
     };
@@ -57,8 +55,20 @@ export default $config({
       ],
     });
 
-    // Static site deployment - domain only for prod to prevent conflicts
+    // Static site deployment - domain only for prod to prevent DNS conflicts
     const useCustomDomain = $app.stage === 'production';
+    const domainConfig = useCustomDomain
+      ? {
+          domain: {
+            name: 'getaiready.dev',
+            redirects: ['www.getaiready.dev'],
+            dns: sst.cloudflare.dns({
+              zone: cloudflareZoneId,
+              proxy: true,
+            }),
+          },
+        }
+      : {};
 
     const site = new sst.aws.StaticSite('AireadyLanding', {
       path: './',
@@ -69,16 +79,7 @@ export default $config({
       environment: {
         NEXT_PUBLIC_REQUEST_URL: api.url,
       },
-      ...(useCustomDomain && {
-        domain: {
-          name: 'getaiready.dev',
-          redirects: ['www.getaiready.dev'],
-          dns: sst.cloudflare.dns({
-            zone: cloudflareZoneId,
-            proxy: true,
-          }),
-        },
-      }),
+      ...domainConfig,
       invalidation: {
         paths: ['/*'],
         wait: true,
