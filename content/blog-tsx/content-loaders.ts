@@ -61,4 +61,6 @@ export const contentLoaders: Record<string, () => Promise<{ default: any }>> = {
     import('./claweague-series-part-3-management-agentic-era'),
   'claweague-series-part-4-eclawnomy-manifesto': () =>
     import('./claweague-series-part-4-eclawnomy-manifesto'),
+  'vibe-coding-cost-cutting': () => import('./vibe-coding-cost-cutting'),
+  'token-optimization-guide': () => import('./token-optimization-guide'),
 };

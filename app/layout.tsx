@@ -23,26 +23,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://getaiready.dev'),
   title: {
-    default: 'AIReady - Make Your Codebase AI-Ready',
+    default: 'AIReady - AI-Efficient Code & Vibe-Coding Token Optimization',
     template: '%s | AIReady',
   },
   description:
-    'Optimize your codebase for Multi-Human Multi-Agent Collaboration. Detect semantic duplicates, analyze context windows, and maintain consistency for autonomous AI agents and human-in-the-loop workflows.',
+    'Optimize your codebase for AI-efficiency and slash token costs. Stop wasting context on redundant code. The authority for vibe-coding cost cutting and OpenClaw token optimization.',
   keywords: [
+    'AI-efficient code',
+    'vibe-coding cost cutting',
+    'OpenClaw token optimization',
+    'slash AI token costs',
     'multi-human multi-agent collaboration',
-    'human-agent collaboration',
     'agentic workflow optimization',
     'AI codebase optimization',
     'semantic duplicate detection',
     'context window analysis',
-    'code consistency checker',
+    'LLM token efficiency',
     'AI readiness score',
-    'TypeScript analysis',
     'AI pair programming',
     'developer tools',
     'static analysis',
-    'open source tools',
-    'AI collaboration',
+    'autonomous agents',
   ],
   authors: [{ name: 'AIReady Team', url: 'https://getaiready.dev' }],
   creator: 'AIReady',
@@ -74,9 +75,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'AIReady - Make Your Codebase AI-Ready',
+    title: 'AIReady - Slash Token Costs with AI-Efficient Code',
     description:
-      'Free tools to optimize your codebase for AI collaboration. Detect semantic duplicates, analyze context windows, and maintain consistency.',
+      'The authority for vibe-coding cost cutting and OpenClaw token optimization. Optimize your codebase for AI-efficiency and save thousands in LLM costs.',
     url: 'https://getaiready.dev',
     siteName: 'AIReady',
     images: [
@@ -84,7 +85,7 @@ export const metadata: Metadata = {
         url: 'https://getaiready.dev/logo-text.png',
         width: 1200,
         height: 630,
-        alt: 'AIReady - AI-Ready Codebase Tools',
+        alt: 'AIReady - Token Optimization & AI-Efficiency',
       },
     ],
     locale: 'en_US',
@@ -92,9 +93,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AIReady - Make Your Codebase AI-Ready',
+    title: 'AIReady - AI-Efficient Code & Vibe-Coding Cost Cutting',
     description:
-      'Free tools to optimize your codebase for AI collaboration. Detect semantic duplicates, analyze context windows, and maintain consistency that AI models understand.',
+      'Stop wasting money on redundant AI context. Optimize your codebase for OpenClaw and slash token costs with AIReady.',
     images: ['https://getaiready.dev/logo-text.png'],
     creator: '@aireadytools',
     site: '@aireadytools',

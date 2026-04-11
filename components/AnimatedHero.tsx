@@ -14,7 +14,12 @@ import {
 } from 'lucide-react';
 import { UI_DELAY_SHORT_MS, ANIMATION_WORD_ROTATION_MS } from '@/lib/constants';
 
-const words = ['AI-Ready', 'Model-Aware', 'Agentic', 'ROI-Driven'];
+const words = [
+  'AI-Efficient',
+  'Cost-Optimized',
+  'Ready-to-Code',
+  'Token-Smart',
+];
 
 interface AnimatedHeroProps {
   onOpenAudit: () => void;
@@ -107,14 +112,14 @@ export default function AnimatedHero({ onOpenAudit }: AnimatedHeroProps) {
         className="text-2xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed"
       >
         <span className="font-semibold text-slate-900">
-          Your AI tools aren't broken. Your codebase confuses them.
+          Slash token costs and boost vibe-coding velocity.
         </span>
         <br />
-        See why Coding Agents struggle and where small changes unlock outsized
-        AI leverage—in 5 minutes.
+        See why Coding Agents struggle and where small changes unlock massive
+        token savings—in 5 minutes.
         <br />
         <span className="text-blue-600 font-medium whitespace-normal">
-          Optimized for frontier models: GPT-5, Claude 4.6, & Gemini 3.1 Pro.
+          The authority for OpenClaw token optimization and agentic efficiency.
         </span>
       </motion.p>
 

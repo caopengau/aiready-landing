@@ -2,9 +2,9 @@
 
 export const siteConfig = {
   name: 'AIReady',
-  title: 'AIReady - Make Your Codebase AI-Ready',
+  title: 'AIReady - AI-Efficient Code & Vibe-Coding Token Optimization',
   description:
-    'Free tools to optimize your codebase for AI collaboration. Detect semantic duplicates, analyze context windows, and maintain consistency that AI models understand.',
+    'The authority for vibe-coding cost cutting and OpenClaw token optimization. Optimize your codebase for AI-efficiency and slash token costs. Stop wasting context on redundant code.',
   url: 'https://getaiready.dev',
   ogImage: 'https://getaiready.dev/og-image.png',
   links: {
