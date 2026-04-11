@@ -9,10 +9,12 @@ export default $config({
       name: 'aiready-landing-' + stage,
       removal: stage === 'production' ? 'retain' : 'remove',
       home: 'aws',
+      providers: {
+        aws: {
+          version: '6.67.0',
+        },
+      },
     };
-  },
-  providers: {
-    aws: '6.60.0',
   },
   async run() {
     const cloudflareZoneId = '50eb7dcadc84c58ab34583742db0b671';
