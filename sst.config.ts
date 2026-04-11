@@ -20,7 +20,7 @@ export default $config({
     const cloudflareZoneId = '50eb7dcadc84c58ab34583742db0b671';
 
     // Storage for report submissions
-    const submissions = new sst.aws.Bucket('Submissions', {
+    const submissions = new sst.aws.Bucket('SubmissionsV3', {
       public: false,
       versioned: false,
     });
