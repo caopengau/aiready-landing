@@ -16,7 +16,7 @@ The tsunami is here. Most teams don't even see the wave.
 
 ## The Paradox: Going Fast While Falling Behind
 
-Here's what I observed while building [receiptclaimer](https://receiptclaimer.com), our receipt management SaaS:
+Here's what I observed while building [receiptclaimer](https://receiptclaimer.com.au), our receipt management SaaS:
 
 **Month 1-2:** 🚀 Amazing! We're shipping features daily. Copilot writes boilerplate, Claude helps with complex logic, ChatGPT generates tests. We're moving 3x faster than any team I've been on.
 
@@ -226,8 +226,8 @@ npx @aiready/context-analyzer ./src
 
 ---
 
-_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimizing codebases for AI adoption. He's been writing code for 15 years and learning to work with AI assistants for the last 2._
+_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com.au) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimizing codebases for AI adoption. He's been writing code for 15 years and learning to work with AI assistants for the last 2._
 
 > [!TIP]
 > **Ready for Autonomous Infrastructure?**
-> Check out our open-source project [serverlessclaw](https://github.com/caopengau/serverlessclaw) or try the managed [ClawMore](https://clawmore.ai/) service for instant agentic readiness.
+> Check out our open-source project [serverlessclaw](https://github.com/serverlessclaw/serverlessclaw) or try the managed [ClawMore](https://clawmore.ai/) service for instant agentic readiness.

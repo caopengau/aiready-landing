@@ -62,7 +62,7 @@ Suddenly that 128K context window doesn't feel so spacious. Add a few related fi
 
 ## Real-World Impact: The receiptclaimer Analysis
 
-When I ran `@aiready/context-analyzer` on [receiptclaimer](https://receiptclaimer.com)'s codebase, I discovered patterns that shocked me:
+When I ran `@aiready/context-analyzer` on [receiptclaimer](https://receiptclaimer.com.au)'s codebase, I discovered patterns that shocked me:
 
 **Before Refactoring:**
 
@@ -708,4 +708,4 @@ npx @aiready/cli scan --score
 
 ---
 
-_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimizing codebases for AI adoption._
+_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com.au) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimizing codebases for AI adoption._

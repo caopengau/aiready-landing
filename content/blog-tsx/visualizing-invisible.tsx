@@ -326,7 +326,7 @@ npx aiready visualise --output report.html`}</CodeBlock>
 
     <p className="text-sm italic text-slate-500">
       *Peng Cao is the founder of{' '}
-      <a href="https://receiptclaimer.com">receiptclaimer</a> and creator of{' '}
+      <a href="https://receiptclaimer.com.au">receiptclaimer</a> and creator of{' '}
       <a href="https://github.com/getaiready/aiready-cli">aiready</a>, an
       open-source suite for measuring and optimising codebases for AI adoption.*
     </p>

@@ -123,8 +123,8 @@ Total: 801 lines, 19,153 tokens`}</CodeBlock>
 
     <p>
       When I ran <code>@aiready/context-analyzer</code> on{' '}
-      <a href="https://receiptclaimer.com">receiptclaimer</a>&apos;s codebase, I
-      discovered patterns that shocked me:
+      <a href="https://receiptclaimer.com.au">receiptclaimer</a>&apos;s
+      codebase, I discovered patterns that shocked me:
     </p>
 
     <h3>Before Refactoring:</h3>
@@ -473,7 +473,7 @@ npx @aiready/cli compare baseline.json after.json`}</CodeBlock>
 
     <p className="text-sm italic text-slate-500">
       *Peng Cao is the founder of{' '}
-      <a href="https://receiptclaimer.com">receiptclaimer</a> and creator of{' '}
+      <a href="https://receiptclaimer.com.au">receiptclaimer</a> and creator of{' '}
       <a href="https://github.com/getaiready/aiready-cli">aiready</a>, an
       open-source suite for measuring and optimising codebases for AI adoption.*
     </p>

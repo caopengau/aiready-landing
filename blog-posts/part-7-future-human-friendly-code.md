@@ -1,4 +1,4 @@
-# Part 7: The Future is Human-Friendly Code (For AI and Humans)
+# Part 7: The Future is Friendly Code For AI and Humans
 
 > This is the final part of our "AI Code Debt Tsunami" series. We've explored the hidden costs of AI-assisted development, the metrics that matter, and the tools to visualize and manage debt. Today, we look forward to the future of software development in an AI-first world.
 
@@ -64,4 +64,4 @@ Thank you for following along with this series. The tsunami is here, but togethe
 
 ---
 
-_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimising codebases for AI adoption._
+_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com.au) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimising codebases for AI adoption._

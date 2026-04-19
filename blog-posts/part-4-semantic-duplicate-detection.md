@@ -47,7 +47,7 @@ AI models suffer from the same limitation. When they scan your codebase for cont
 
 ## Real-World Impact: The receiptclaimer Story
 
-When I ran `@aiready/pattern-detect` on [receiptclaimer](https://receiptclaimer.com)'s codebase, I found **23 semantic duplicate patterns** scattered across 47 files. Here's what that looked like:
+When I ran `@aiready/pattern-detect` on [receiptclaimer](https://receiptclaimer.com.au)'s codebase, I found **23 semantic duplicate patterns** scattered across 47 files. Here's what that looked like:
 
 **Before:**
 
@@ -410,4 +410,4 @@ npx @aiready/cli scan --score
 
 ---
 
-_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimizing codebases for AI adoption._
+_Peng Cao is the founder of [receiptclaimer](https://receiptclaimer.com.au) and creator of [aiready](https://github.com/getaiready/aiready-cli), an open-source suite for measuring and optimizing codebases for AI adoption._

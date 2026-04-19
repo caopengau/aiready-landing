@@ -31,7 +31,7 @@ Events: GAP_DETECTED → PATCH_PLANNED → GIT_COMMIT
 
 ## 03. Unlimited Breadth
 
-This asynchronous nature gives [`serverlessclaw`](https://github.com/caopengau/serverlessclaw) what we call **Unlimited Breadth**. Because there is no central controller, we can scale sub-agents horizontally across the AWS global infrastructure. A mutation happening in `ap-southeast-2` can trigger a security reflection in `us-east-1` in milliseconds.
+This asynchronous nature gives [`serverlessclaw`](https://github.com/serverlessclaw/serverlessclaw) what we call **Unlimited Breadth**. Because there is no central controller, we can scale sub-agents horizontally across the AWS global infrastructure. A mutation happening in `ap-southeast-2` can trigger a security reflection in `us-east-1` in milliseconds.
 
 ## 04. The Next Evolution
 
@@ -43,4 +43,4 @@ _Next up: Part 5: "The Reflector: Machines that Self-Critique"_
 
 > [!TIP]
 > **Ready for Autonomous Infrastructure?**
-> Check out our open-source project [serverlessclaw](https://github.com/caopengau/serverlessclaw) or try the managed [ClawMore](https://clawmore.ai/) service for instant agentic readiness.
+> Check out our open-source project [serverlessclaw](https://github.com/serverlessclaw/serverlessclaw) or try the managed [ClawMore](https://clawmore.ai/) service for instant agentic readiness.

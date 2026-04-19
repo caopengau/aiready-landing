@@ -76,7 +76,7 @@ return email.search('@') >= 0 && email.search('.') >= 0;`}</CodeBlock>
     <h2>Real-World Impact: The receiptclaimer Story</h2>
     <p>
       When I ran <code>@aiready/pattern-detect</code> on{' '}
-      <a href="https://receiptclaimer.com">receiptclaimer</a>'s codebase, I
+      <a href="https://receiptclaimer.com.au">receiptclaimer</a>'s codebase, I
       found <strong>23 semantic duplicate patterns</strong> scattered across 47
       files. Here's what that looked like:
     </p>
@@ -237,7 +237,7 @@ const dedupe = (a) => Array.from(new Set(a));`}</CodeBlock>
 
     <p className="text-sm italic text-slate-500">
       *Peng Cao is the founder of{' '}
-      <a href="https://receiptclaimer.com">receiptclaimer</a> and creator of{' '}
+      <a href="https://receiptclaimer.com.au">receiptclaimer</a> and creator of{' '}
       <a href="https://github.com/getaiready/aiready-cli">aiready</a>, an
       open-source suite for measuring and optimizing codebases for AI adoption.*
     </p>

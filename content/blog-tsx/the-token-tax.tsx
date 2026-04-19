@@ -164,7 +164,7 @@ const Post = () => (
       </li>
       <li>
         <a
-          href="https://github.com/caopengau/serverlessclaw"
+          href="https://github.com/serverlessclaw/serverlessclaw"
           className="text-indigo-400 hover:text-indigo-300 transition-colors"
         >
           <strong>ServerlessClaw:</strong> The open-source architecture for

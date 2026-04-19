@@ -46,7 +46,7 @@ You aren't buying software. You are buying **latency-free intelligence.**
 
 **Get the code:**
 
-- [ServerlessClaw on GitHub](https://github.com/caopengau/serverlessclaw)
+- [ServerlessClaw on GitHub](https://github.com/serverlessclaw/serverlessclaw)
 
 In the next post, we’ll talk about **ClawMore**—how we manage this infrastructure as a service (EaaS) and the "Mutation Tax" that funds the evolution of the ecosystem.
 
