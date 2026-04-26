@@ -11,7 +11,7 @@ export default $config({
       home: 'aws',
       providers: {
         aws: {
-          version: '6.67.0',
+          version: '7.20.0',
         },
       },
     };
